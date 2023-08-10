@@ -76,8 +76,6 @@ C:\Users\Administrator\Desktop\b10t1\Back-end\Backend\obj\Debug\net6.0\Backend.M
 C:\Users\Administrator\Desktop\b10t1\Back-end\Backend\obj\Debug\net6.0\Backend.dll
 C:\Users\Administrator\Desktop\b10t1\Back-end\Backend\obj\Debug\net6.0\refint\Backend.dll
 C:\Users\Administrator\Desktop\b10t1\Back-end\Backend\obj\Debug\net6.0\Backend.pdb
-C:\Users\Administrator\Desktop\b10t1\Back-end\Backend\bin\Debug\net6.0\appsettings.Development.json
-C:\Users\Administrator\Desktop\b10t1\Back-end\Backend\bin\Debug\net6.0\appsettings.json
 C:\Users\Administrator\Desktop\b10t1\Back-end\Backend\bin\Debug\net6.0\Backend.exe
 C:\Users\Administrator\Desktop\b10t1\Back-end\Backend\bin\Debug\net6.0\Backend.deps.json
 C:\Users\Administrator\Desktop\b10t1\Back-end\Backend\bin\Debug\net6.0\Backend.runtimeconfig.json
