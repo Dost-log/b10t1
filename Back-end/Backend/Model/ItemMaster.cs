@@ -23,10 +23,11 @@ namespace Backend.Entities
         public char status { get; set; }
 
         [Column(TypeName = "varchar")]
-        [StringLength(25)]
+        [StringLength(20)]
         public string category { get; set; }
 
         [Column(TypeName = "int")]
+        
         public int valuation { get; set; }
 
     }

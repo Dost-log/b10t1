@@ -5,11 +5,11 @@ namespace Backend.Entities
     public class LoanDBContext : DbContext
     {
 
-        public DbSet<EmployeeMaster> EmployeeMasters{get; set;}
+        public DbSet<ItemMaster> ItemMasters{get; set;}
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(@"server=,database=Loan;trusted=cnnectiontrue");
+            optionsBuilder.UseSqlServer(@"server=WINDOWS-BVQNF6J;database=Loan;trusted_connection=true;encrypt=false");
         }
 
     }
