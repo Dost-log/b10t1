@@ -4,30 +4,32 @@ namespace Backend.Entities
 {
     public class EmployeeIssue
     {
-        [Key]
+        [Required]
+        [ForeignKey("EmployeeMaster")]
         [Column(TypeName = "varchar")]
         [StringLength(6)]
         public int EmployeeId { get; set; }
 
         [Required]
+        [ForeignKey("ItemMaster")]
         [Column(TypeName = "varchar")]
         [StringLength(6)]
-        public string Name { get; set; }
+        public string itemId { get; set; }
 
         [Column(TypeName = "varchar")]
         [StringLength(25)]
         public string Designation { get; set; }
 
-        [Column(TypeName = "varchar")]
-        [StringLength(25)]
-        public string Dept { get; set; }
 
+        [Key]
         [Column(TypeName = "varchar")]
-        [StringLength(1)]
-        public char Gender { get; set; }
+        [StringLength(6)]
+        public string issueId { get; set; }
 
-        [Column(TypeName = "Date")]
-        [StringLength(25)]
-        public DateOnly DOB { get; set; }
+        [Column(TypeName = "DateOnly")]
+        public DateOnly return_date { get; set; }
+
+        [Column(TypeName = "DateOnly")]
+        public DateOnly issue_date { get; set; }
     }
 }
