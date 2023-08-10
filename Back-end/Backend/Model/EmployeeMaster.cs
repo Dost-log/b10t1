@@ -27,11 +27,11 @@ namespace Backend.Entities
         [StringLength(25)]
         public string department { get; set; }
 
-        [Column(TypeName = "DateOnly")]
-        public DateOnly DOB { get; set; }
+        [Column(TypeName = "DateTime")]
+        public DateTime DOB { get; set; }
 
-        [Column(TypeName = "DateOnly")]
-        public DateOnly DOJ { get; set; }
+        [Column(TypeName = "DateTime")]
+        public DateTime DOJ { get; set; }
 
 
 

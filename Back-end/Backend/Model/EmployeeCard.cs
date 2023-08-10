@@ -12,6 +12,8 @@ namespace Backend.Entities
         [Key]
         public int LoanId { get; set; }*/
 
+       
+
         [Required]
         [ForeignKey("EmployeeMaster")]
         [StringLength(6)]
@@ -24,7 +26,7 @@ namespace Backend.Entities
         public string LoanId { get; set; }
         public LoanCardMaster card { get; set; }
 
-        [Column(TypeName = "DateOnly")]
-        public DateOnly issue_date { get; set; }
+        [Column(TypeName = "DateTime")]
+        public DateTime issue_date { get; set; }
     }
 }

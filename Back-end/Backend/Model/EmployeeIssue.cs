@@ -26,10 +26,10 @@ namespace Backend.Entities
         [StringLength(6)]
         public string issueId { get; set; }
 
-        [Column(TypeName = "DateOnly")]
-        public DateOnly return_date { get; set; }
+        [Column(TypeName = "DateTime")]
+        public DateTime return_date { get; set; }
 
-        [Column(TypeName = "DateOnly")]
-        public DateOnly issue_date { get; set; }
+        [Column(TypeName = "DateTime")]
+        public DateTime issue_date { get; set; }
     }
 }

@@ -18,5 +18,11 @@ namespace Backend.Entities
             optionsBuilder.UseSqlServer(@"server=WINDOWS-BVQNF6J;database=Loan;trusted_connection=true;encrypt=false");
         }
 
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            
+            modelBuilder.Entity<EmployeeCard>()
+                .HasKey(c => new { c.LoanId, c.EmployeeId });
+        }
     }
 }
