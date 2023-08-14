@@ -22,24 +22,24 @@ namespace Backend.Controllers
 
         // GET: api/ItemMasters
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<ItemMaster>>> GetItemMasters()
+        public async Task<ActionResult<IEnumerable<ItemMaster>>> GetItemMaster()
         {
-          if (_context.ItemMasters == null)
+          if (_context.ItemMaster == null)
           {
               return NotFound();
           }
-            return await _context.ItemMasters.ToListAsync();
+            return await _context.ItemMaster.ToListAsync();
         }
 
         // GET: api/ItemMasters/5
         [HttpGet("{id}")]
         public async Task<ActionResult<ItemMaster>> GetItemMaster(string id)
         {
-          if (_context.ItemMasters == null)
+          if (_context.ItemMaster == null)
           {
               return NotFound();
           }
-            var itemMaster = await _context.ItemMasters.FindAsync(id);
+            var itemMaster = await _context.ItemMaster.FindAsync(id);
 
             if (itemMaster == null)
             {
@@ -85,11 +85,11 @@ namespace Backend.Controllers
         [HttpPost]
         public async Task<ActionResult<ItemMaster>> PostItemMaster(ItemMaster itemMaster)
         {
-          if (_context.ItemMasters == null)
+          if (_context.ItemMaster == null)
           {
-              return Problem("Entity set 'LoanDBContext.ItemMasters'  is null.");
+              return Problem("Entity set 'LoanDBContext.ItemMaster'  is null.");
           }
-            _context.ItemMasters.Add(itemMaster);
+            _context.ItemMaster.Add(itemMaster);
             try
             {
                 await _context.SaveChangesAsync();
@@ -113,17 +113,17 @@ namespace Backend.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteItemMaster(string id)
         {
-            if (_context.ItemMasters == null)
+            if (_context.ItemMaster == null)
             {
                 return NotFound();
             }
-            var itemMaster = await _context.ItemMasters.FindAsync(id);
+            var itemMaster = await _context.ItemMaster.FindAsync(id);
             if (itemMaster == null)
             {
                 return NotFound();
             }
 
-            _context.ItemMasters.Remove(itemMaster);
+            _context.ItemMaster.Remove(itemMaster);
             await _context.SaveChangesAsync();
 
             return NoContent();
@@ -131,7 +131,7 @@ namespace Backend.Controllers
 
         private bool ItemMasterExists(string id)
         {
-            return (_context.ItemMasters?.Any(e => e.itemId == id)).GetValueOrDefault();
+            return (_context.ItemMaster?.Any(e => e.itemId == id)).GetValueOrDefault();
         }
     }
 }

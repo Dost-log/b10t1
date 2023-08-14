@@ -22,24 +22,24 @@ namespace Backend.Controllers
 
         // GET: api/EmployeeMasters
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<EmployeeMaster>>> GetEmployeeMasters()
+        public async Task<ActionResult<IEnumerable<EmployeeMaster>>> GetEmployeeMaster()
         {
-          if (_context.EmployeeMasters == null)
+          if (_context.EmployeeMaster == null)
           {
               return NotFound();
           }
-            return await _context.EmployeeMasters.ToListAsync();
+            return await _context.EmployeeMaster.ToListAsync();
         }
 
         // GET: api/EmployeeMasters/5
         [HttpGet("{id}")]
         public async Task<ActionResult<EmployeeMaster>> GetEmployeeMaster(string id)
         {
-          if (_context.EmployeeMasters == null)
+          if (_context.EmployeeMaster == null)
           {
               return NotFound();
           }
-            var employeeMaster = await _context.EmployeeMasters.FindAsync(id);
+            var employeeMaster = await _context.EmployeeMaster.FindAsync(id);
 
             if (employeeMaster == null)
             {
@@ -85,11 +85,11 @@ namespace Backend.Controllers
         [HttpPost]
         public async Task<ActionResult<EmployeeMaster>> PostEmployeeMaster(EmployeeMaster employeeMaster)
         {
-          if (_context.EmployeeMasters == null)
+          if (_context.EmployeeMaster == null)
           {
-              return Problem("Entity set 'LoanDBContext.EmployeeMasters'  is null.");
+              return Problem("Entity set 'LoanDBContext.EmployeeMaster'  is null.");
           }
-            _context.EmployeeMasters.Add(employeeMaster);
+            _context.EmployeeMaster.Add(employeeMaster);
             try
             {
                 await _context.SaveChangesAsync();
@@ -113,17 +113,17 @@ namespace Backend.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteEmployeeMaster(string id)
         {
-            if (_context.EmployeeMasters == null)
+            if (_context.EmployeeMaster == null)
             {
                 return NotFound();
             }
-            var employeeMaster = await _context.EmployeeMasters.FindAsync(id);
+            var employeeMaster = await _context.EmployeeMaster.FindAsync(id);
             if (employeeMaster == null)
             {
                 return NotFound();
             }
 
-            _context.EmployeeMasters.Remove(employeeMaster);
+            _context.EmployeeMaster.Remove(employeeMaster);
             await _context.SaveChangesAsync();
 
             return NoContent();
@@ -131,7 +131,7 @@ namespace Backend.Controllers
 
         private bool EmployeeMasterExists(string id)
         {
-            return (_context.EmployeeMasters?.Any(e => e.EmployeeId == id)).GetValueOrDefault();
+            return (_context.EmployeeMaster?.Any(e => e.EmployeeId == id)).GetValueOrDefault();
         }
     }
 }
