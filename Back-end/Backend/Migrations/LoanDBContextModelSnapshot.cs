@@ -17,10 +17,10 @@ namespace Backend.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.20")
+                .HasAnnotation("ProductVersion", "7.0.10")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
-            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
+            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
             modelBuilder.Entity("Backend.Entities.EmployeeCard", b =>
                 {
@@ -49,24 +49,24 @@ namespace Backend.Migrations
 
                     b.HasIndex("cardLoanId");
 
-                    b.ToTable("EmployeeCards");
+                    b.ToTable("EmployeeCard");
                 });
 
             modelBuilder.Entity("Backend.Entities.EmployeeIssue", b =>
                 {
                     b.Property<string>("issueId")
                         .HasMaxLength(6)
-                        .HasColumnType("varchar(6)");
+                        .HasColumnType("varchar");
 
                     b.Property<string>("Designation")
                         .IsRequired()
                         .HasMaxLength(25)
-                        .HasColumnType("varchar(25)");
+                        .HasColumnType("varchar");
 
                     b.Property<string>("EmployeeId")
                         .IsRequired()
                         .HasMaxLength(6)
-                        .HasColumnType("varchar(6)");
+                        .HasColumnType("varchar");
 
                     b.Property<DateTime>("issue_date")
                         .HasColumnType("DateTime");
@@ -74,21 +74,21 @@ namespace Backend.Migrations
                     b.Property<string>("itemId")
                         .IsRequired()
                         .HasMaxLength(6)
-                        .HasColumnType("varchar(6)");
+                        .HasColumnType("varchar");
 
                     b.Property<DateTime>("return_date")
                         .HasColumnType("DateTime");
 
                     b.HasKey("issueId");
 
-                    b.ToTable("EmployeeIssues");
+                    b.ToTable("EmployeeIssue");
                 });
 
             modelBuilder.Entity("Backend.Entities.EmployeeMaster", b =>
                 {
                     b.Property<string>("EmployeeId")
                         .HasMaxLength(6)
-                        .HasColumnType("varchar(6)");
+                        .HasColumnType("varchar");
 
                     b.Property<DateTime>("DOB")
                         .HasColumnType("DateTime");
@@ -99,65 +99,65 @@ namespace Backend.Migrations
                     b.Property<string>("department")
                         .IsRequired()
                         .HasMaxLength(25)
-                        .HasColumnType("varchar(25)");
+                        .HasColumnType("varchar");
 
                     b.Property<string>("designation")
                         .IsRequired()
                         .HasMaxLength(25)
-                        .HasColumnType("varchar(25)");
+                        .HasColumnType("varchar");
 
                     b.Property<string>("gender")
                         .IsRequired()
-                        .HasColumnType("char(1)");
+                        .HasColumnType("char");
 
                     b.Property<string>("name")
                         .IsRequired()
                         .HasMaxLength(20)
-                        .HasColumnType("varchar(20)");
+                        .HasColumnType("varchar");
 
                     b.HasKey("EmployeeId");
 
-                    b.ToTable("EmployeeMasters");
+                    b.ToTable("EmployeeMaster");
                 });
 
             modelBuilder.Entity("Backend.Entities.ItemMaster", b =>
                 {
                     b.Property<string>("itemId")
                         .HasMaxLength(6)
-                        .HasColumnType("varchar(6)");
+                        .HasColumnType("varchar");
 
                     b.Property<string>("category")
                         .IsRequired()
                         .HasMaxLength(20)
-                        .HasColumnType("varchar(20)");
+                        .HasColumnType("varchar");
 
                     b.Property<string>("descprition")
                         .IsRequired()
                         .HasMaxLength(25)
-                        .HasColumnType("varchar(25)");
+                        .HasColumnType("varchar");
 
                     b.Property<string>("make")
                         .IsRequired()
                         .HasMaxLength(25)
-                        .HasColumnType("varchar(25)");
+                        .HasColumnType("varchar");
 
                     b.Property<string>("status")
                         .IsRequired()
-                        .HasColumnType("char(1)");
+                        .HasColumnType("char");
 
                     b.Property<int>("valuation")
                         .HasColumnType("int");
 
                     b.HasKey("itemId");
 
-                    b.ToTable("ItemMasters");
+                    b.ToTable("ItemMaster");
                 });
 
             modelBuilder.Entity("Backend.Entities.LoanCardMaster", b =>
                 {
                     b.Property<string>("LoanId")
                         .HasMaxLength(6)
-                        .HasColumnType("varchar(6)");
+                        .HasColumnType("varchar");
 
                     b.Property<int>("duration")
                         .HasColumnType("int");
@@ -165,47 +165,27 @@ namespace Backend.Migrations
                     b.Property<string>("loan_type")
                         .IsRequired()
                         .HasMaxLength(15)
-                        .HasColumnType("varchar(15)");
+                        .HasColumnType("varchar");
 
                     b.HasKey("LoanId");
 
-                    b.ToTable("LoanCardMasters");
+                    b.ToTable("LoanCardMaster");
                 });
 
             modelBuilder.Entity("Backend.Model.AdminMaster", b =>
                 {
                     b.Property<string>("EmployeeId")
                         .HasMaxLength(6)
-                        .HasColumnType("varchar(6)");
+                        .HasColumnType("varchar");
 
-                    b.Property<DateTime>("DOB")
-                        .HasColumnType("DateTime");
-
-                    b.Property<DateTime>("DOJ")
-                        .HasColumnType("DateTime");
-
-                    b.Property<string>("department")
+                    b.Property<string>("password")
                         .IsRequired()
-                        .HasMaxLength(25)
-                        .HasColumnType("varchar(25)");
-
-                    b.Property<string>("designation")
-                        .IsRequired()
-                        .HasMaxLength(25)
-                        .HasColumnType("varchar(25)");
-
-                    b.Property<string>("gender")
-                        .IsRequired()
-                        .HasColumnType("char(1)");
-
-                    b.Property<string>("name")
-                        .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("varchar(20)");
+                        .HasMaxLength(8)
+                        .HasColumnType("varchar");
 
                     b.HasKey("EmployeeId");
 
-                    b.ToTable("AdminMasters");
+                    b.ToTable("AdminMaster");
                 });
 
             modelBuilder.Entity("Backend.Entities.EmployeeCard", b =>

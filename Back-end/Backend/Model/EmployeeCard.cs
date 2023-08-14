@@ -12,8 +12,6 @@ namespace Backend.Entities
         [Key]
         public int LoanId { get; set; }*/
 
-       
-
         [Required]
         [ForeignKey("EmployeeMaster")]
         [StringLength(6)]
