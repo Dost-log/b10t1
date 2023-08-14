@@ -20,6 +20,23 @@ import {DatePicker} from '@mui/x-date-pickers/DatePicker'
 const defaultTheme = createTheme();
 
 export default function AddCustomerData() {
+
+  const [designation, setDesignation] = React.useState('');
+  const [department, setDepartment] = React.useState('');
+  const [gender, setGender] = React.useState('');
+
+  const designationChange = (event) => {
+    setDesignation(event.target.value);
+  }
+
+  const departmentChange = (event) => {
+    setDepartment(event.target.value);
+  }
+
+  const genderChange = (event) => {
+    setGender(event.target.value);
+  }
+
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -31,11 +48,14 @@ export default function AddCustomerData() {
 
   return (
     <ThemeProvider theme={defaultTheme}>
+      <Typography variant='h2' align='center' marginTop={5}>
+            Loan Management System
+      </Typography>
       <Container component="main" maxWidth="xs">
         <CssBaseline />
         <Box
           sx={{
-            marginTop: 8,
+            marginTop: 5,
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
@@ -62,13 +82,14 @@ export default function AddCustomerData() {
                 <FormControl fullWidth>
                 <InputLabel id="designation-select-label">Designation</InputLabel>
                 <Select
-                  required
                   labelId='designation-select-label'
                   id="designation"
-                  label="Designation">
-                  <MenuItem >Manager</MenuItem>
-                  <MenuItem >CEO</MenuItem>
-                  <MenuItem >Software Developer</MenuItem>
+                  label="Designation"
+                  value={designation}
+                  onChange={designationChange}>
+                  <MenuItem value={"Manager"}>Manager</MenuItem>
+                  <MenuItem value={"CEO"}>CEO</MenuItem>
+                  <MenuItem value={"Software Developer"}>Software Developer</MenuItem>
                 </Select>
                 </FormControl>
               </Grid>
@@ -94,33 +115,34 @@ export default function AddCustomerData() {
                   required
                   labelId='department-select-label'
                   id="department"
-                  label="Department">
-                  <MenuItem >Manager</MenuItem>
-                  <MenuItem >CEO</MenuItem>
-                  <MenuItem >Software Developer</MenuItem>
+                  label="Department"
+                  onChange={departmentChange}
+                  value={department}>
+                  <MenuItem value={"Technology"}>Technology</MenuItem>
+                  <MenuItem value={"Finance"}>Finance</MenuItem>
+                  <MenuItem value={"H.R."}>H.R.</MenuItem>
                 </Select>
                 </FormControl>
               </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  required
-                  fullWidth
-                  id="email"
-                  label="Email Address"
-                  name="email"
-                  autoComplete="email"
-                />
+              <Grid item xs={12} sm={6}>
+              <LocalizationProvider dateAdapter={AdapterDayjs}>
+                <DatePicker label="Date of joining"/>
+              </LocalizationProvider>
               </Grid>
-              <Grid item xs={12}>
-                <TextField
+              <Grid item xs={12} sm={6}>
+                <FormControl fullWidth>
+                <InputLabel id="gender-select-label">Gender</InputLabel>
+                <Select
                   required
-                  fullWidth
-                  name="password"
-                  label="Password"
-                  type="password"
-                  id="password"
-                  autoComplete="new-password"
-                />
+                  labelId='gender-select-label'
+                  id="gender"
+                  label="Gender"
+                  onChange={genderChange}
+                  value={gender}>
+                  <MenuItem value={"Male"}>Male</MenuItem>
+                  <MenuItem value={"Female"}>Female</MenuItem>
+                </Select>
+                </FormControl>
               </Grid>
               
             </Grid>
