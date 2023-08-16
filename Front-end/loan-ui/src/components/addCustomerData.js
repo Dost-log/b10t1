@@ -15,23 +15,60 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import {DatePicker} from '@mui/x-date-pickers/DatePicker'
+import dayjs from 'dayjs';
+import axios from 'axios';
+// import response from 'express';
 
 
 const defaultTheme = createTheme();
+const url = "http://localhost:5174/api/AdminMasters/GetAdmin?id=string";
 
 export default function AddCustomerData() {
 
+  const [employeeId, setEmployeeId] = React.useState('');
   const [designation, setDesignation] = React.useState('');
+  const [employeeName, setEmployeeName] = React.useState('');
+  const [dob, setDob] = React.useState(dayjs('2022-01-01'));
   const [department, setDepartment] = React.useState('');
+  const [doj, setDoj] = React.useState(dayjs('2022-01-01'));
   const [gender, setGender] = React.useState('');
+  const [post, setPost] = React.useState(null);
 
+  React.useEffect(() => {
+    axios.get(url, {
+      headers : {
+        'Access-Control-Allow-Origin':'*',
+      }
+    }).then((response) => {
+      setPost(response.data);
+    });
+  }, []);
+
+  if(post) console.log(post);
+
+  const employeeIdChange = (event) => {
+    setEmployeeId(event.target.value);
+  }
+  
   const designationChange = (event) => {
     setDesignation(event.target.value);
   }
 
+  const employeeNameChange = (event) => {
+    setEmployeeName(event.target.value);
+  }
+
+  // const dobChange = (event) => {
+  //   setDob(event.target.value);
+  // }
+
   const departmentChange = (event) => {
     setDepartment(event.target.value);
   }
+
+  // const dojChange = (event) => {
+  //   setDoj(event.target.value);
+  // }
 
   const genderChange = (event) => {
     setGender(event.target.value);
@@ -39,11 +76,14 @@ export default function AddCustomerData() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
+    console.log(department);
+    console.log(designation);
+    console.log(employeeId);
+    console.log(employeeName);
+    console.log(dob.format("DD/MM/YYYY"));
+    console.log(dob);
+    console.log(doj);
+    console.log(gender);
   };
 
   return (
@@ -63,7 +103,7 @@ export default function AddCustomerData() {
         >
           
           <Typography component="h1" variant="h5">
-            Sign up
+            Add a new user
           </Typography>
           <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
             <Grid container spacing={2}>
@@ -75,6 +115,8 @@ export default function AddCustomerData() {
                   fullWidth
                   id="firstName"
                   label="Employee Id"
+                  value={employeeId}
+                  onChange={employeeIdChange}
                   autoFocus
                 />
               </Grid>
@@ -100,12 +142,16 @@ export default function AddCustomerData() {
                   id="lastName"
                   label="Employee Name"
                   name="lastName"
-                  autoComplete="family-name"
+                  value={employeeName}
+                  onChange={employeeNameChange}
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
               <LocalizationProvider dateAdapter={AdapterDayjs}>
-                <DatePicker label="Date of birth"/>
+                <DatePicker 
+                label="Date of birth"
+                value={dob}
+                onChange={(newDob) => setDob(newDob)}/>
               </LocalizationProvider>
               </Grid>
               <Grid item xs={12} sm={6}>
@@ -126,7 +172,10 @@ export default function AddCustomerData() {
               </Grid>
               <Grid item xs={12} sm={6}>
               <LocalizationProvider dateAdapter={AdapterDayjs}>
-                <DatePicker label="Date of joining"/>
+                <DatePicker 
+                label="Date of joining"
+                value={doj}
+                  onChange={(newDoj) => setDoj(newDoj)}/>
               </LocalizationProvider>
               </Grid>
               <Grid item xs={12} sm={6}>
@@ -150,6 +199,7 @@ export default function AddCustomerData() {
               type="submit"
               fullWidth
               variant="contained"
+              onClick={handleSubmit}
               sx={{ mt: 3, mb: 2 }}
             >
               Add user
