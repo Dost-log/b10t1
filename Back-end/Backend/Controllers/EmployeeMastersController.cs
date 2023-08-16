@@ -1,137 +1,106 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Backend.Entities;
+using Backend.Services;
+using Backend.Model;
 
 namespace Backend.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/[controller]/[Action]")]
     [ApiController]
-    public class EmployeeMastersController : ControllerBase
+    public class EmployeeMastersController : Controller
     {
-        private readonly LoanDBContext _context;
-
-        public EmployeeMastersController(LoanDBContext context)
+        private readonly IEmployeeMastersRepository _employeeMastersRepository;
+        
+        public EmployeeMastersController(IEmployeeMastersRepository _employeeMastersRepository)
         {
-            _context = context;
+            this._employeeMastersRepository = _employeeMastersRepository;
         }
-
-        // GET: api/EmployeeMasters
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<EmployeeMaster>>> GetEmployeeMaster()
+        public ActionResult GetEmployee(string id)
         {
-          if (_context.EmployeeMaster == null)
-          {
-              return NotFound();
-          }
-            return await _context.EmployeeMaster.ToListAsync();
-        }
-
-        // GET: api/EmployeeMasters/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<EmployeeMaster>> GetEmployeeMaster(string id)
-        {
-          if (_context.EmployeeMaster == null)
-          {
-              return NotFound();
-          }
-            var employeeMaster = await _context.EmployeeMaster.FindAsync(id);
-
-            if (employeeMaster == null)
-            {
-                return NotFound();
-            }
-
-            return employeeMaster;
-        }
-
-        // PUT: api/EmployeeMasters/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutEmployeeMaster(string id, EmployeeMaster employeeMaster)
-        {
-            if (id != employeeMaster.EmployeeId)
-            {
-                return BadRequest();
-            }
-
-            _context.Entry(employeeMaster).State = EntityState.Modified;
-
             try
             {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!EmployeeMasterExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+                var result = _employeeMastersRepository.GetEmployee(id);
+                return StatusCode(200, result);
 
-            return NoContent();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status417ExpectationFailed, ex.Message);
+            }
         }
 
-        // POST: api/EmployeeMasters
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [HttpPost] 
+        public ActionResult AddEmployee(EmployeeMasters employeeMasters)
+        {
+            try
+            {
+                _employeeMastersRepository.AddEmployee(employeeMasters);
+                return StatusCode(200);
+                
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status417ExpectationFailed,ex.Message);
+            }
+        }
+
         [HttpPost]
-        public async Task<ActionResult<EmployeeMaster>> PostEmployeeMaster(EmployeeMaster employeeMaster)
+        public ActionResult EditEmployee(EmployeeMasters employeeMasters)
         {
-          if (_context.EmployeeMaster == null)
-          {
-              return Problem("Entity set 'LoanDBContext.EmployeeMaster'  is null.");
-          }
-            _context.EmployeeMaster.Add(employeeMaster);
             try
             {
-                await _context.SaveChangesAsync();
+                _employeeMastersRepository.EditEmployee(employeeMasters);
+                return StatusCode(200);
+
             }
-            catch (DbUpdateException)
+            catch (Exception ex)
             {
-                if (EmployeeMasterExists(employeeMaster.EmployeeId))
+                return StatusCode(StatusCodes.Status417ExpectationFailed, ex.Message);
+            }
+        }
+
+        [HttpDelete]
+        public ActionResult DeleteEmployee(string id)
+        {
+            try
+            {
+                _employeeMastersRepository.DeleteEmployee(id);
+                return StatusCode(200);
+
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status417ExpectationFailed, ex.Message);
+            }
+        }
+        [HttpPost]
+        public ActionResult LoginEmployeeMasters(string id, string password)
+        {
+            try
+            {
+                var result = _employeeMastersRepository.LoginEmployeeMasters(id, password);
+                if (result == null)
                 {
-                    return Conflict();
+                    return StatusCode(400, "Invalid Credentials");
                 }
                 else
                 {
-                    throw;
+                    if (result.password == password)
+                    {
+                        return StatusCode(200, result);
+                    }
+                    else
+                    {
+                        return StatusCode(400, "Invalid Credentials");
+                    }
                 }
             }
-
-            return CreatedAtAction("GetEmployeeMaster", new { id = employeeMaster.EmployeeId }, employeeMaster);
-        }
-
-        // DELETE: api/EmployeeMasters/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteEmployeeMaster(string id)
-        {
-            if (_context.EmployeeMaster == null)
+            catch (Exception ex)
             {
-                return NotFound();
+                return StatusCode(StatusCodes.Status417ExpectationFailed, ex.Message);
             }
-            var employeeMaster = await _context.EmployeeMaster.FindAsync(id);
-            if (employeeMaster == null)
-            {
-                return NotFound();
-            }
-
-            _context.EmployeeMaster.Remove(employeeMaster);
-            await _context.SaveChangesAsync();
-
-            return NoContent();
-        }
-
-        private bool EmployeeMasterExists(string id)
-        {
-            return (_context.EmployeeMaster?.Any(e => e.EmployeeId == id)).GetValueOrDefault();
         }
     }
 }

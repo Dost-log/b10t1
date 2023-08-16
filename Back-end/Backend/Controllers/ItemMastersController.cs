@@ -1,137 +1,79 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Backend.Entities;
+using Backend.Services;
+using Backend.Model;
 
 namespace Backend.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/[controller]/[Action]")]
     [ApiController]
-    public class ItemMastersController : ControllerBase
+    public class ItemMastersController : Controller
     {
-        private readonly LoanDBContext _context;
-
-        public ItemMastersController(LoanDBContext context)
+        private readonly IItemMasterRepository _itemMasterRepository;
+        
+        public ItemMastersController(IItemMasterRepository _itemMasterRepository)
         {
-            _context = context;
+            this._itemMasterRepository = _itemMasterRepository;
         }
-
-        // GET: api/ItemMasters
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<ItemMaster>>> GetItemMaster()
+        public ActionResult GetItem(string id)
         {
-          if (_context.ItemMaster == null)
-          {
-              return NotFound();
-          }
-            return await _context.ItemMaster.ToListAsync();
-        }
-
-        // GET: api/ItemMasters/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<ItemMaster>> GetItemMaster(string id)
-        {
-          if (_context.ItemMaster == null)
-          {
-              return NotFound();
-          }
-            var itemMaster = await _context.ItemMaster.FindAsync(id);
-
-            if (itemMaster == null)
-            {
-                return NotFound();
-            }
-
-            return itemMaster;
-        }
-
-        // PUT: api/ItemMasters/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutItemMaster(string id, ItemMaster itemMaster)
-        {
-            if (id != itemMaster.itemId)
-            {
-                return BadRequest();
-            }
-
-            _context.Entry(itemMaster).State = EntityState.Modified;
-
             try
             {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!ItemMasterExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+                var result = _itemMasterRepository.GetItem(id);
+                return StatusCode(200, result);
 
-            return NoContent();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status417ExpectationFailed, ex.Message);
+            }
         }
 
-        // POST: api/ItemMasters
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [HttpPost] 
+        public ActionResult AddItem(ItemMasters itemMasters)
+        {
+            try
+            {
+                _itemMasterRepository.AddItem(itemMasters);
+                return StatusCode(200);
+                
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status417ExpectationFailed,ex.Message);
+            }
+        }
+
         [HttpPost]
-        public async Task<ActionResult<ItemMaster>> PostItemMaster(ItemMaster itemMaster)
+        public ActionResult EditItem(ItemMasters itemMasters)
         {
-          if (_context.ItemMaster == null)
-          {
-              return Problem("Entity set 'LoanDBContext.ItemMaster'  is null.");
-          }
-            _context.ItemMaster.Add(itemMaster);
             try
             {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateException)
-            {
-                if (ItemMasterExists(itemMaster.itemId))
-                {
-                    return Conflict();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+                _itemMasterRepository.EditItem(itemMasters);
+                return StatusCode(200);
 
-            return CreatedAtAction("GetItemMaster", new { id = itemMaster.itemId }, itemMaster);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status417ExpectationFailed, ex.Message);
+            }
         }
 
-        // DELETE: api/ItemMasters/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteItemMaster(string id)
+        [HttpDelete]
+        public ActionResult DeleteItem(string id)
         {
-            if (_context.ItemMaster == null)
+            try
             {
-                return NotFound();
+                _itemMasterRepository.DeleteItem(id);
+                return StatusCode(200);
+
             }
-            var itemMaster = await _context.ItemMaster.FindAsync(id);
-            if (itemMaster == null)
+            catch (Exception ex)
             {
-                return NotFound();
+                return StatusCode(StatusCodes.Status417ExpectationFailed, ex.Message);
             }
-
-            _context.ItemMaster.Remove(itemMaster);
-            await _context.SaveChangesAsync();
-
-            return NoContent();
-        }
-
-        private bool ItemMasterExists(string id)
-        {
-            return (_context.ItemMaster?.Any(e => e.itemId == id)).GetValueOrDefault();
         }
     }
 }

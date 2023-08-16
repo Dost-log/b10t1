@@ -1,137 +1,79 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Backend.Entities;
+using Backend.Services;
+using Backend.Model;
 
 namespace Backend.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/[controller]/[Action]")]
     [ApiController]
-    public class EmployeeIssuesController : ControllerBase
+    public class EmployeeIssuesController : Controller
     {
-        private readonly LoanDBContext _context;
-
-        public EmployeeIssuesController(LoanDBContext context)
+        private readonly IEmployeeIssuesRepository _employeeIssuesRepository;
+        
+        public EmployeeIssuesController(IEmployeeIssuesRepository _employeeIssuesRepository)
         {
-            _context = context;
+            this._employeeIssuesRepository = _employeeIssuesRepository;
         }
-
-        // GET: api/EmployeeIssues
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<EmployeeIssue>>> GetEmployeeIssue()
+        public ActionResult GetEmployeeIssue(string id)
         {
-          if (_context.EmployeeIssue == null)
-          {
-              return NotFound();
-          }
-            return await _context.EmployeeIssue.ToListAsync();
-        }
-
-        // GET: api/EmployeeIssues/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<EmployeeIssue>> GetEmployeeIssue(string id)
-        {
-          if (_context.EmployeeIssue == null)
-          {
-              return NotFound();
-          }
-            var employeeIssue = await _context.EmployeeIssue.FindAsync(id);
-
-            if (employeeIssue == null)
-            {
-                return NotFound();
-            }
-
-            return employeeIssue;
-        }
-
-        // PUT: api/EmployeeIssues/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutEmployeeIssue(string id, EmployeeIssue employeeIssue)
-        {
-            if (id != employeeIssue.issueId)
-            {
-                return BadRequest();
-            }
-
-            _context.Entry(employeeIssue).State = EntityState.Modified;
-
             try
             {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!EmployeeIssueExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+                var result = _employeeIssuesRepository.GetEmployeeIssue(id);
+                return StatusCode(200, result);
 
-            return NoContent();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status417ExpectationFailed, ex.Message);
+            }
         }
 
-        // POST: api/EmployeeIssues
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [HttpPost] 
+        public ActionResult AddEmployeeIssue(EmployeeIssues employeeIssues)
+        {
+            try
+            {
+                _employeeIssuesRepository.AddEmployeeIssue(employeeIssues);
+                return StatusCode(200);
+                
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status417ExpectationFailed,ex.Message);
+            }
+        }
+
         [HttpPost]
-        public async Task<ActionResult<EmployeeIssue>> PostEmployeeIssue(EmployeeIssue employeeIssue)
+        public ActionResult EditEmployeeIssue(EmployeeIssues employeeIssues)
         {
-          if (_context.EmployeeIssue == null)
-          {
-              return Problem("Entity set 'LoanDBContext.EmployeeIssue'  is null.");
-          }
-            _context.EmployeeIssue.Add(employeeIssue);
             try
             {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateException)
-            {
-                if (EmployeeIssueExists(employeeIssue.issueId))
-                {
-                    return Conflict();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+                _employeeIssuesRepository.EditEmployeeIssue(employeeIssues);
+                return StatusCode(200);
 
-            return CreatedAtAction("GetEmployeeIssue", new { id = employeeIssue.issueId }, employeeIssue);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status417ExpectationFailed, ex.Message);
+            }
         }
 
-        // DELETE: api/EmployeeIssues/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteEmployeeIssue(string id)
+        [HttpDelete]
+        public ActionResult DeleteEmployeeCard(string id)
         {
-            if (_context.EmployeeIssue == null)
+            try
             {
-                return NotFound();
+                _employeeIssuesRepository.DeleteEmployeeIssue(id);
+                return StatusCode(200);
+
             }
-            var employeeIssue = await _context.EmployeeIssue.FindAsync(id);
-            if (employeeIssue == null)
+            catch (Exception ex)
             {
-                return NotFound();
+                return StatusCode(StatusCodes.Status417ExpectationFailed, ex.Message);
             }
-
-            _context.EmployeeIssue.Remove(employeeIssue);
-            await _context.SaveChangesAsync();
-
-            return NoContent();
-        }
-
-        private bool EmployeeIssueExists(string id)
-        {
-            return (_context.EmployeeIssue?.Any(e => e.issueId == id)).GetValueOrDefault();
         }
     }
 }

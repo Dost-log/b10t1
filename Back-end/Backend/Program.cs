@@ -1,4 +1,5 @@
 using Backend.Entities;
+using Backend.Services;
 using Microsoft.EntityFrameworkCore;
 
 namespace Backend
@@ -8,16 +9,29 @@ namespace Backend
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy(name: "CORS", builder =>
+                {
+                    builder.AllowAnyHeader()
+                    .WithOrigins("http://localhost:3000")
+                    .AllowCredentials()
+                    .AllowAnyMethod();
+                });
+            });
+            builder.Services.AddDbContext<LoanDBContext>(option => option.UseSqlServer(builder.Configuration.GetConnectionString("LoanAPIConnection")));
+            builder.Services.AddScoped<IAdminMastersRepository, AdminMastersRepository>();
             var connection = builder.Configuration.GetConnectionString("LoanAPIConnection");
             // Add services to the container.
-            builder.Services.AddDbContext<LoanDBContext>(options => options.UseSqlServer(connection));
+
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
-
+            
             var app = builder.Build();
-          //  builder.Services.AddDbContext<LoanDBContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("LoanAPIConnection")))
+            app.UseCors("CORS");
+
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
             {

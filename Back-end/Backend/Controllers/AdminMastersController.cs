@@ -1,153 +1,105 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Backend.Entities;
-using Backend.Model;
-using Microsoft.CodeAnalysis.Diagnostics;
-using Microsoft.IdentityModel.Tokens;
+using Backend.Services;
+using Backend.Model; 
 
 namespace Backend.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/[controller]/[Action]")]
     [ApiController]
-    public class AdminMastersController : ControllerBase
+    public class AdminMastersController : Controller
     {
-        private readonly LoanDBContext _context;
-
-        public AdminMastersController(LoanDBContext context)
+        private readonly IAdminMastersRepository _adminMastersRepository;
+        
+        public AdminMastersController(IAdminMastersRepository _adminMastersRepository)
         {
-            _context = context;
+            this._adminMastersRepository = _adminMastersRepository;
         }
-       // public IActionResult Authenticate(AdminMaster admin)
-       // {
-          //  var currentUser = .AdminMaster.FirstOrDefault(o => o.Username.ToLower() == admin.UserId.ToLower() && o.Password == admin.password);
-       // }
-        //public IActionResult Login([FromBody] AdminMaster admin)
-        //{
-            //var user = Authenticate(admin);
-            //if (user != null)
-            //{
-               // var token = Generate(user);
-             //   return Ok(token);
-           // }
-         //   return NotFound("User not found");
-       // }
-        // GET: api/AdminMasters
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<AdminMaster>>> GetAdminMaster()
+        public ActionResult GetAdmin(string id)
         {
-          if (_context.AdminMaster == null)
-          {
-              return NotFound();
-          }
-            return await _context.AdminMaster.ToListAsync();
-        }
-
-        // GET: api/AdminMasters/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<AdminMaster>> GetAdminMaster(string id)
-        {
-          if (_context.AdminMaster == null)
-          {
-              return NotFound();
-          }
-            var adminMaster = await _context.AdminMaster.FindAsync(id);
-
-            if (adminMaster == null)
-            {
-                return NotFound();
-            }
-
-            return adminMaster;
-        }
-
-        // PUT: api/AdminMasters/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutAdminMaster(string id, AdminMaster adminMaster)
-        {
-            if (id != adminMaster.EmployeeId)
-            {
-                return BadRequest();
-            }
-
-            _context.Entry(adminMaster).State = EntityState.Modified;
-
             try
             {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!AdminMasterExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+                var result = _adminMastersRepository.GetAdmin(id);
+                return StatusCode(200, result);
 
-            return NoContent();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status417ExpectationFailed, ex.Message);
+            }
+        }
+        [HttpPost] 
+        public ActionResult AddAdmin(AdminMasters _adminMasters)
+        {
+            try
+            {
+                _adminMastersRepository.AddAdmin(_adminMasters);
+                return StatusCode(200);
+                
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status417ExpectationFailed,ex.Message);
+            }
         }
 
-        // POST: api/AdminMasters
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<AdminMaster>> PostAdminMaster(AdminMaster adminMaster)
+        public ActionResult EditAdmin(AdminMasters _adminMasters)
         {
-          if (_context.AdminMaster == null)
-          {
-              return Problem("Entity set 'LoanDBContext.AdminMaster'  is null.");
-          }
-            _context.AdminMaster.Add(adminMaster);
             try
             {
-                await _context.SaveChangesAsync();
+                _adminMastersRepository.EditAdmin(_adminMasters);
+                return StatusCode(200);
+
             }
-            catch (DbUpdateException)
+            catch (Exception ex)
             {
-                if (AdminMasterExists(adminMaster.EmployeeId))
-                {
-                    return Conflict();
+                return StatusCode(StatusCodes.Status417ExpectationFailed, ex.Message);
+            }
+        }
+
+        [HttpDelete]
+        public ActionResult DeleteAdmin(string id)
+        {
+            try
+            {
+                _adminMastersRepository.DeleteAdmin(id);
+                return StatusCode(200);
+
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status417ExpectationFailed, ex.Message);
+            }
+        }
+
+        [HttpPost]
+        public ActionResult LoginAdminMasters(string id,string password)
+        {
+            try
+            {
+                var result = _adminMastersRepository.LoginAdminMasters(id,password);
+                if (result == null) {
+                    return StatusCode(400, "Invalid Credentials");
                 }
                 else
                 {
-                    throw;
+                    if (result.password == password)
+                    {
+                        return StatusCode(200, result);
+                    }
+                    else
+                    {
+                        return StatusCode(400, "Invalid Credentials");
+                    }
                 }
             }
-
-            return CreatedAtAction("GetAdminMaster", new { id = adminMaster.EmployeeId }, adminMaster);
-        }
-
-        // DELETE: api/AdminMasters/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteAdminMaster(string id)
-        {
-            if (_context.AdminMaster == null)
+            catch (Exception ex)
             {
-                return NotFound();
+                return StatusCode(StatusCodes.Status417ExpectationFailed, ex.Message);
             }
-            var adminMaster = await _context.AdminMaster.FindAsync(id);
-            if (adminMaster == null)
-            {
-                return NotFound();
-            }
-
-            _context.AdminMaster.Remove(adminMaster);
-            await _context.SaveChangesAsync();
-
-            return NoContent();
-        }
-
-        private bool AdminMasterExists(string id)
-        {
-            return (_context.AdminMaster?.Any(e => e.EmployeeId == id)).GetValueOrDefault();
         }
     }
 }

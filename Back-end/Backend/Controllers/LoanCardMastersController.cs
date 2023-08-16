@@ -1,137 +1,79 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Backend.Entities;
+using Backend.Services;
+using Backend.Model;
 
 namespace Backend.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/[controller]/[Action]")]
     [ApiController]
-    public class LoanCardMastersController : ControllerBase
+    public class LoanCardMastersController : Controller
     {
-        private readonly LoanDBContext _context;
-
-        public LoanCardMastersController(LoanDBContext context)
+        private readonly ILoanCardMastersRepository _loanCardMastersRepository;
+        
+        public LoanCardMastersController(ILoanCardMastersRepository _loanCardMastersRepository)
         {
-            _context = context;
+            this._loanCardMastersRepository = _loanCardMastersRepository;
         }
-
-        // GET: api/LoanCardMasters
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<LoanCardMaster>>> GetLoanCardMaster()
+        public ActionResult GetLoanCard(string id)
         {
-          if (_context.LoanCardMaster == null)
-          {
-              return NotFound();
-          }
-            return await _context.LoanCardMaster.ToListAsync();
-        }
-
-        // GET: api/LoanCardMasters/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<LoanCardMaster>> GetLoanCardMaster(string id)
-        {
-          if (_context.LoanCardMaster == null)
-          {
-              return NotFound();
-          }
-            var loanCardMaster = await _context.LoanCardMaster.FindAsync(id);
-
-            if (loanCardMaster == null)
-            {
-                return NotFound();
-            }
-
-            return loanCardMaster;
-        }
-
-        // PUT: api/LoanCardMasters/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutLoanCardMaster(string id, LoanCardMaster loanCardMaster)
-        {
-            if (id != loanCardMaster.LoanId)
-            {
-                return BadRequest();
-            }
-
-            _context.Entry(loanCardMaster).State = EntityState.Modified;
-
             try
             {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!LoanCardMasterExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+                var result = _loanCardMastersRepository.GetLoanCard(id);
+                return StatusCode(200, result);
 
-            return NoContent();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status417ExpectationFailed, ex.Message);
+            }
         }
 
-        // POST: api/LoanCardMasters
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [HttpPost] 
+        public ActionResult AddLoanCard(LoanCardMasters loanCardMasters)
+        {
+            try
+            {
+                _loanCardMastersRepository.AddLoanCard(loanCardMasters);
+                return StatusCode(200);
+                
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status417ExpectationFailed,ex.Message);
+            }
+        }
+
         [HttpPost]
-        public async Task<ActionResult<LoanCardMaster>> PostLoanCardMaster(LoanCardMaster loanCardMaster)
+        public ActionResult EditLoanCard(LoanCardMasters loanCardMasters)
         {
-          if (_context.LoanCardMaster == null)
-          {
-              return Problem("Entity set 'LoanDBContext.LoanCardMaster'  is null.");
-          }
-            _context.LoanCardMaster.Add(loanCardMaster);
             try
             {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateException)
-            {
-                if (LoanCardMasterExists(loanCardMaster.LoanId))
-                {
-                    return Conflict();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+                _loanCardMastersRepository.EditLoanCard(loanCardMasters);
+                return StatusCode(200);
 
-            return CreatedAtAction("GetLoanCardMaster", new { id = loanCardMaster.LoanId }, loanCardMaster);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status417ExpectationFailed, ex.Message);
+            }
         }
 
-        // DELETE: api/LoanCardMasters/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteLoanCardMaster(string id)
+        [HttpDelete]
+        public ActionResult DeleteLoanCard(string id)
         {
-            if (_context.LoanCardMaster == null)
+            try
             {
-                return NotFound();
+                _loanCardMastersRepository.DeleteLoanCard(id);
+                return StatusCode(200);
+
             }
-            var loanCardMaster = await _context.LoanCardMaster.FindAsync(id);
-            if (loanCardMaster == null)
+            catch (Exception ex)
             {
-                return NotFound();
+                return StatusCode(StatusCodes.Status417ExpectationFailed, ex.Message);
             }
-
-            _context.LoanCardMaster.Remove(loanCardMaster);
-            await _context.SaveChangesAsync();
-
-            return NoContent();
-        }
-
-        private bool LoanCardMasterExists(string id)
-        {
-            return (_context.LoanCardMaster?.Any(e => e.LoanId == id)).GetValueOrDefault();
         }
     }
 }

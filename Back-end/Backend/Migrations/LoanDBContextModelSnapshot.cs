@@ -22,12 +22,8 @@ namespace Backend.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("Backend.Entities.EmployeeCard", b =>
+            modelBuilder.Entity("Backend.Entities.EmployeeCards", b =>
                 {
-                    b.Property<string>("LoanId")
-                        .HasMaxLength(6)
-                        .HasColumnType("nvarchar(6)");
-
                     b.Property<string>("EmployeeId")
                         .HasMaxLength(6)
                         .HasColumnType("nvarchar(6)");
@@ -36,6 +32,11 @@ namespace Backend.Migrations
                         .IsRequired()
                         .HasColumnType("varchar(6)");
 
+                    b.Property<string>("LoanId")
+                        .IsRequired()
+                        .HasMaxLength(6)
+                        .HasColumnType("nvarchar(6)");
+
                     b.Property<string>("cardLoanId")
                         .IsRequired()
                         .HasColumnType("varchar(6)");
@@ -43,16 +44,21 @@ namespace Backend.Migrations
                     b.Property<DateTime>("issue_date")
                         .HasColumnType("DateTime");
 
-                    b.HasKey("LoanId", "EmployeeId");
+                    b.Property<string>("password")
+                        .IsRequired()
+                        .HasMaxLength(25)
+                        .HasColumnType("varchar");
+
+                    b.HasKey("EmployeeId");
 
                     b.HasIndex("EmployeeId1");
 
                     b.HasIndex("cardLoanId");
 
-                    b.ToTable("EmployeeCard");
+                    b.ToTable("EmployeeCards");
                 });
 
-            modelBuilder.Entity("Backend.Entities.EmployeeIssue", b =>
+            modelBuilder.Entity("Backend.Entities.EmployeeIssues", b =>
                 {
                     b.Property<string>("issueId")
                         .HasMaxLength(6)
@@ -81,10 +87,10 @@ namespace Backend.Migrations
 
                     b.HasKey("issueId");
 
-                    b.ToTable("EmployeeIssue");
+                    b.ToTable("EmployeeIssues");
                 });
 
-            modelBuilder.Entity("Backend.Entities.EmployeeMaster", b =>
+            modelBuilder.Entity("Backend.Entities.EmployeeMasters", b =>
                 {
                     b.Property<string>("EmployeeId")
                         .HasMaxLength(6)
@@ -115,12 +121,17 @@ namespace Backend.Migrations
                         .HasMaxLength(20)
                         .HasColumnType("varchar");
 
+                    b.Property<string>("password")
+                        .IsRequired()
+                        .HasMaxLength(25)
+                        .HasColumnType("varchar");
+
                     b.HasKey("EmployeeId");
 
-                    b.ToTable("EmployeeMaster");
+                    b.ToTable("EmployeeMasters");
                 });
 
-            modelBuilder.Entity("Backend.Entities.ItemMaster", b =>
+            modelBuilder.Entity("Backend.Entities.ItemMasters", b =>
                 {
                     b.Property<string>("itemId")
                         .HasMaxLength(6)
@@ -150,10 +161,10 @@ namespace Backend.Migrations
 
                     b.HasKey("itemId");
 
-                    b.ToTable("ItemMaster");
+                    b.ToTable("ItemMasters");
                 });
 
-            modelBuilder.Entity("Backend.Entities.LoanCardMaster", b =>
+            modelBuilder.Entity("Backend.Entities.LoanCardMasters", b =>
                 {
                     b.Property<string>("LoanId")
                         .HasMaxLength(6)
@@ -169,34 +180,59 @@ namespace Backend.Migrations
 
                     b.HasKey("LoanId");
 
-                    b.ToTable("LoanCardMaster");
+                    b.ToTable("LoanCardMasters");
                 });
 
-            modelBuilder.Entity("Backend.Model.AdminMaster", b =>
+            modelBuilder.Entity("Backend.Model.AdminMasters", b =>
                 {
                     b.Property<string>("EmployeeId")
                         .HasMaxLength(6)
                         .HasColumnType("varchar");
 
+                    b.Property<DateTime>("DOB")
+                        .HasColumnType("DateTime");
+
+                    b.Property<DateTime>("DOJ")
+                        .HasColumnType("DateTime");
+
+                    b.Property<string>("department")
+                        .IsRequired()
+                        .HasMaxLength(25)
+                        .HasColumnType("varchar");
+
+                    b.Property<string>("designation")
+                        .IsRequired()
+                        .HasMaxLength(25)
+                        .HasColumnType("varchar");
+
+                    b.Property<string>("gender")
+                        .IsRequired()
+                        .HasColumnType("char");
+
+                    b.Property<string>("name")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("varchar");
+
                     b.Property<string>("password")
                         .IsRequired()
-                        .HasMaxLength(8)
+                        .HasMaxLength(25)
                         .HasColumnType("varchar");
 
                     b.HasKey("EmployeeId");
 
-                    b.ToTable("AdminMaster");
+                    b.ToTable("AdminMasters");
                 });
 
-            modelBuilder.Entity("Backend.Entities.EmployeeCard", b =>
+            modelBuilder.Entity("Backend.Entities.EmployeeCards", b =>
                 {
-                    b.HasOne("Backend.Entities.EmployeeMaster", "emp")
+                    b.HasOne("Backend.Entities.EmployeeMasters", "emp")
                         .WithMany()
                         .HasForeignKey("EmployeeId1")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Backend.Entities.LoanCardMaster", "card")
+                    b.HasOne("Backend.Entities.LoanCardMasters", "card")
                         .WithMany()
                         .HasForeignKey("cardLoanId")
                         .OnDelete(DeleteBehavior.Cascade)
