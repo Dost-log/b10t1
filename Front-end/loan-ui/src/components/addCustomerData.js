@@ -21,7 +21,7 @@ import axios from 'axios';
 
 
 const defaultTheme = createTheme();
-const url = "http://localhost:5174/api/AdminMasters/GetAdmin?id=string";
+const url = "http://localhost:5174/api/EmployeeMasters/AddEmployee";
 
 export default function AddCustomerData() {
 
@@ -34,15 +34,34 @@ export default function AddCustomerData() {
   const [gender, setGender] = React.useState('');
   const [post, setPost] = React.useState(null);
 
+  // React.useEffect(() => {
+  //   axios.get(url, {
+  //     headers : {
+  //       'Access-Control-Allow-Origin':'*',
+  //     }
+  //   }).then((response) => {
+  //     setPost(response.data);
+  //   });
+  // }, []);
+
   React.useEffect(() => {
-    axios.get(url, {
+    axios.post(url, {
+      employeeId: employeeId,
+      name: employeeName,
+      designation: designation,
+      gender: gender,
+      department: department,
+      dob: dob,
+      doj: doj,
+      password: "testing@123"
+    }, {
       headers : {
         'Access-Control-Allow-Origin':'*',
       }
     }).then((response) => {
       setPost(response.data);
     });
-  }, []);
+  })
 
   if(post) console.log(post);
 
@@ -188,8 +207,8 @@ export default function AddCustomerData() {
                   label="Gender"
                   onChange={genderChange}
                   value={gender}>
-                  <MenuItem value={"Male"}>Male</MenuItem>
-                  <MenuItem value={"Female"}>Female</MenuItem>
+                  <MenuItem value={"M"}>Male</MenuItem>
+                  <MenuItem value={"F"}>Female</MenuItem>
                 </Select>
                 </FormControl>
               </Grid>

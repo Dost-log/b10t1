@@ -12,13 +12,18 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import axios from 'axios';
 
 
 const defaultTheme = createTheme();
+const url = "http://localhost:5174/api/AdminMasters/GetAdmin";
 
 export default function AdminLogin() {
 
   const navigate = useNavigate();
+  const [username, setUsername] = React.useState("");
+  const [password, setPassword] = React.useState("");
+  const [post, setPost] = React.useState(null);
 
   // const handleSubmit = (event) => {
   //   event.preventDefault();
@@ -29,8 +34,31 @@ export default function AdminLogin() {
   //   });
   // };
 
+  const usernameChange = (event) => {
+    setUsername(event.target.value);
+  }
+
+  const passwordChange = (event) => {
+    setPassword(event.target.value);
+  }
+
   const handleSubmit = () => {
-    navigate('/admin-dashboard');
+    
+    React.useEffect(() => {
+      axios.get(url, {
+        headers : {
+          'Access-Control-Allow-Origin':'*',
+        }
+      }).then((response) => {
+        setPost(response.data);
+      });
+    }, []);
+
+    if(post) {
+      console.log(post);
+      //navigate('/admin-dashboard');
+    }
+    
   }
 
   return (
@@ -64,6 +92,8 @@ export default function AdminLogin() {
               id="email"
               label="Email Address"
               name="email"
+              value={username}
+              onChange={usernameChange}
               autoComplete="email"
               autoFocus
             />
@@ -75,6 +105,8 @@ export default function AdminLogin() {
               label="Password"
               type="password"
               id="password"
+              value={password}
+              onChange={passwordChange}
               autoComplete="current-password"
             />
             
