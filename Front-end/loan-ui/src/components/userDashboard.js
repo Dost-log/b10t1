@@ -19,6 +19,12 @@ const defaultTheme = createTheme();
 
 
 export default function UserDashboard() {
+
+    const navigate = useNavigate();
+    const UserApplyLoan = () => {
+        navigate('\apply-for-loan');
+    }
+
   return (
     <ThemeProvider theme={defaultTheme}>
       <Typography variant='h2' align='center' marginTop={5}>
@@ -53,7 +59,8 @@ export default function UserDashboard() {
 
           <Button 
             fullWidth
-            sx={{mb : 4}}
+            sx={{ mb: 4 }}
+            onClick={UserApplyLoan}
             variant='outlined' 
             align='center'>
               Apply for Loan
