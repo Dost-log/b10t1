@@ -1,7 +1,7 @@
-﻿using Backend.Model;
-using Backend.Entities;
+﻿using Backend.Entities;
+using Backend.Interfaces;
 
-namespace Backend.Services
+namespace Backend.Repositories
 {
     public class AdminMastersRepository:IAdminMastersRepository
     {

@@ -1,6 +1,4 @@
-﻿using Backend.Entities;
-using Backend.Model;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 
 namespace Backend.Entities
 {
@@ -23,20 +21,13 @@ namespace Backend.Entities
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            
-            modelBuilder.Entity<AdminMasters>()
-                .HasKey(a => a.EmployeeId );
-            modelBuilder.Entity<ItemMasters>()
-                .HasKey(b => b.itemId);
-            modelBuilder.Entity<EmployeeMasters>()
-                .HasKey(c => c.EmployeeId);
-            modelBuilder.Entity<LoanCardMasters>()
-                .HasKey(d => d.LoanId);
-            modelBuilder.Entity<EmployeeIssues>()
-                .HasKey(e => e.issueId);
-            modelBuilder.Entity<EmployeeCards>()
-                .HasKey(f => f.EmployeeId);
-            base.OnModelCreating(modelBuilder);
+            modelBuilder
+                .Entity<EmployeeCards>(
+                    eb =>
+                    {
+                        eb.HasNoKey();
+                    });
         }
+
     }
 }

@@ -1,6 +1,6 @@
-﻿using Backend.Model;
+﻿using Backend.Entities;
 
-namespace Backend.Services
+namespace Backend.Interfaces
 {
     public interface IAdminMastersRepository
     {

@@ -16,7 +16,7 @@ import axios from 'axios';
 
 
 const defaultTheme = createTheme();
-const url = "http://localhost:5174/api/AdminMasters/GetAdmin";
+const url = "http://localhost:5174/api/AdminMasters/LoginAdminMasters";
 
 export default function AdminLogin() {
 
@@ -24,15 +24,6 @@ export default function AdminLogin() {
   const [username, setUsername] = React.useState("");
   const [password, setPassword] = React.useState("");
   const [post, setPost] = React.useState(null);
-
-  // const handleSubmit = (event) => {
-  //   event.preventDefault();
-  //   const data = new FormData(event.currentTarget);
-  //   console.log({
-  //     email: data.get('email'),
-  //     password: data.get('password'),
-  //   });
-  // };
 
   const usernameChange = (event) => {
     setUsername(event.target.value);
@@ -42,23 +33,40 @@ export default function AdminLogin() {
     setPassword(event.target.value);
   }
 
-  const handleSubmit = () => {
-    
-    React.useEffect(() => {
-      axios.get(url, {
-        headers : {
-          'Access-Control-Allow-Origin':'*',
-        }
-      }).then((response) => {
-        setPost(response.data);
-      });
-    }, []);
+  // const handleSubmit = (e) => {
+  //   e.preventDefault();
+  //   axios.post(url, {
+  //     id : username,
+  //     password : password
+  //   }, 
+  //     {
+  //     headers : {
+  //       'Access-Control-Allow-Origin':'*',
+  //     }
+  //   }).then((response) => {
+  //     console.log(response);
+  //   });
 
-    if(post) {
-      console.log(post);
-      //navigate('/admin-dashboard');
-    }
+  //   // if(post) {
+  //   //   console.log(post);
+  //   //   //navigate('/admin-dashboard');
+  //   // }
     
+  // }
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const newUrl = url + "?id=" + username + "&password=" + password;
+    axios.post(newUrl,  
+      {
+      headers : {
+        'Access-Control-Allow-Origin':'*',
+      }
+    }).then((response) => {
+      navigate('/admin-dashboard');
+    }).catch((error) => {
+      alert("Wrong credentials");
+    });
   }
 
   return (
@@ -84,7 +92,7 @@ export default function AdminLogin() {
           <Typography component="h1" variant="h5">
             Admin Login
           </Typography>
-          <Box component="form" noValidate sx={{ mt: 1 }}>
+          <Box noValidate sx={{ mt: 1 }}>
             <TextField
               margin="normal"
               required

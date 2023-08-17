@@ -1,7 +1,6 @@
 ﻿using Backend.Entities;
-using Backend.Model;
 
-namespace Backend.Services
+namespace Backend.Interfaces
 {
     public interface IEmployeeCardsRepository
     {

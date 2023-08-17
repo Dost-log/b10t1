@@ -1,5 +1,5 @@
-﻿using Backend.Model;
-using Backend.Entities;
+﻿using Backend.Entities;
+using Backend.Interfaces;
 
 namespace Backend.Services
 {
