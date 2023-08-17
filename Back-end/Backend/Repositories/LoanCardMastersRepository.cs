@@ -33,5 +33,9 @@ namespace Backend.Repositories
             _dbconnect.LoanCardMasters.Update(loanCardMasters);
             _dbconnect.SaveChanges();
         }
+        public List<LoanCardMasters> GetAllLoanCardMasters()
+        {
+            return _dbconnect.LoanCardMasters.ToList(); 
+        }
     }
 }

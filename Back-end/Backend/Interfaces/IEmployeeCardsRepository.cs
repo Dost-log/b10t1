@@ -8,5 +8,6 @@ namespace Backend.Interfaces
         EmployeeCards GetEmployeeCard(string  id);
         void EditEmployeeCard(EmployeeCards employeeCards);
         void DeleteEmployeeCard(string id);
+        List<EmployeeCards> GetAllEmployeesCards();
     }
 }

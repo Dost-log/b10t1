@@ -33,5 +33,9 @@ namespace Backend.Services
             _dbconnect.EmployeeCards.Update(employeeCards);
             _dbconnect.SaveChanges();
         }
+        public List<EmployeeCards> GetAllEmployeesCards()
+        {
+            return _dbconnect.EmployeeCards.ToList();
+        }
     }
 }

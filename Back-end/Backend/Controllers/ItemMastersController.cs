@@ -75,5 +75,18 @@ namespace Backend.Controllers
                 return StatusCode(StatusCodes.Status417ExpectationFailed, ex.Message);
             }
         }
+
+        [HttpGet]
+        public IActionResult GetAllItemMasters()
+        {
+            try
+            {
+                return StatusCode(200, _itemMasterRepository.GetAllItemMasters());
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status417ExpectationFailed, ex.Message);
+            }
+        }
     }
 }

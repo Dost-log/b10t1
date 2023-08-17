@@ -8,5 +8,6 @@ namespace Backend.Interfaces
         void AddEmployeeIssue(EmployeeIssues employeeIssues);
         void EditEmployeeIssue(EmployeeIssues employeeIssues);
         void DeleteEmployeeIssue(string id);
+        List<EmployeeIssues> GetAllEmployeeIssues();
     }
 }

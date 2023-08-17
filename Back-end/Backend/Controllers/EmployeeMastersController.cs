@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Backend.Entities;
 using Backend.Interfaces;
 using Backend.Repositories;
+using Backend.Services;
 
 namespace Backend.Controllers
 {
@@ -96,6 +97,18 @@ namespace Backend.Controllers
                         return StatusCode(400, "Invalid Credentials");
                     }
                 }
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status417ExpectationFailed, ex.Message);
+            }
+        }
+        [HttpGet]
+        public IActionResult GetAllEmployeeMasters()
+        {
+            try
+            {
+                return StatusCode(200, _employeeMastersRepository.GetAllEmployeeMasters());
             }
             catch (Exception ex)
             {

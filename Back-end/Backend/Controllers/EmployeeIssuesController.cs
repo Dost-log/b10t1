@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Backend.Entities;
 using Backend.Interfaces;
 using Backend.Repositories;
+using Backend.Services;
 
 namespace Backend.Controllers
 {
@@ -69,6 +70,18 @@ namespace Backend.Controllers
                 _employeeIssuesRepository.DeleteEmployeeIssue(id);
                 return StatusCode(200);
 
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status417ExpectationFailed, ex.Message);
+            }
+        }
+        [HttpGet]
+        public IActionResult GetAllEmployeeIssues()
+        {
+            try
+            {
+                return StatusCode(200, _employeeIssuesRepository.GetAllEmployeeIssues());
             }
             catch (Exception ex)
             {

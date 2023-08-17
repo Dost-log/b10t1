@@ -8,5 +8,6 @@ namespace Backend.Interfaces
         void AddLoanCard(LoanCardMasters loanCardMasters);
         void EditLoanCard(LoanCardMasters loanCardMasters);
         void DeleteLoanCard(string id);
+        List<LoanCardMasters> GetAllLoanCardMasters();
     }
 }
