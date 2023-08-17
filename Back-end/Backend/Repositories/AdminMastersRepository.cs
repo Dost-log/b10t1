@@ -37,5 +37,9 @@ namespace Backend.Repositories
             var adminmaster = _dbconnect.AdminMasters.FirstOrDefault(x => x.EmployeeId == id);
             return adminmaster;
         }
+        public List<AdminMasters> GetAllAdmins()
+        {
+            return _dbconnect.AdminMasters.ToList();
+        }
     }
 }

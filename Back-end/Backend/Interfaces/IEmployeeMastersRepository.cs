@@ -9,5 +9,6 @@ namespace Backend.Interfaces
         void EditEmployee(EmployeeMasters employeeMasters);
         void DeleteEmployee(string id);
         EmployeeMasters LoginEmployeeMasters(string id, string password);
+        List<EmployeeMasters> GetAllEmployeeMasters();
     }
 }

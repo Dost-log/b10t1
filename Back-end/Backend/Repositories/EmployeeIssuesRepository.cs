@@ -33,5 +33,9 @@ namespace Backend.Services
             _dbconnect.EmployeeIssues.Update(employeeIssues);
             _dbconnect.SaveChanges();
         }
+        public List<EmployeeIssues> GetAllEmployeeIssues()
+        {
+            return _dbconnect.EmployeeIssues.ToList();  
+        }
     }
 }

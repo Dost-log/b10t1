@@ -8,5 +8,6 @@ namespace Backend.Interfaces
         void AddItem(ItemMasters itemMasters);
         void EditItem(ItemMasters itemMasters);
         void DeleteItem(string id);
+        List<ItemMasters> GetAllItemMasters();
     }
 }

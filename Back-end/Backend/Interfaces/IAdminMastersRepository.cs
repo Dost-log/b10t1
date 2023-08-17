@@ -9,5 +9,6 @@ namespace Backend.Interfaces
         void EditAdmin(AdminMasters adminmaster);
         void DeleteAdmin(string id);
         AdminMasters LoginAdminMasters(string id, string password);
+        List<AdminMasters> GetAllAdmins();
     }
 }

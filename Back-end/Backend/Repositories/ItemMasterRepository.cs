@@ -33,5 +33,9 @@ namespace Backend.Services
             _dbconnect.ItemMasters.Update(itemMasters);
             _dbconnect.SaveChanges();
         }
+        public List<ItemMasters> GetAllItemMasters()
+        {
+            return _dbconnect.ItemMasters.ToList(); 
+        }
     }
 }

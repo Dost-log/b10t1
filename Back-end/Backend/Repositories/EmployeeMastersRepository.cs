@@ -38,5 +38,9 @@ namespace Backend.Repositories
             var employeeMasters = _dbconnect.EmployeeMasters.FirstOrDefault(x => x.EmployeeId == id);
             return employeeMasters;
         }
+        public List<EmployeeMasters> GetAllEmployeeMasters()
+        {
+            return _dbconnect.EmployeeMasters.ToList();     
+        }
     }
 }
