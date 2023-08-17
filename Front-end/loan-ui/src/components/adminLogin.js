@@ -3,12 +3,9 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
 import {Link, useNavigate} from 'react-router-dom';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
-// import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
@@ -23,7 +20,6 @@ export default function AdminLogin() {
   const navigate = useNavigate();
   const [username, setUsername] = React.useState("");
   const [password, setPassword] = React.useState("");
-  const [post, setPost] = React.useState(null);
 
   const usernameChange = (event) => {
     setUsername(event.target.value);
@@ -32,27 +28,6 @@ export default function AdminLogin() {
   const passwordChange = (event) => {
     setPassword(event.target.value);
   }
-
-  // const handleSubmit = (e) => {
-  //   e.preventDefault();
-  //   axios.post(url, {
-  //     id : username,
-  //     password : password
-  //   }, 
-  //     {
-  //     headers : {
-  //       'Access-Control-Allow-Origin':'*',
-  //     }
-  //   }).then((response) => {
-  //     console.log(response);
-  //   });
-
-  //   // if(post) {
-  //   //   console.log(post);
-  //   //   //navigate('/admin-dashboard');
-  //   // }
-    
-  // }
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -98,11 +73,10 @@ export default function AdminLogin() {
               required
               fullWidth
               id="email"
-              label="Email Address"
+              label="Employee Id"
               name="email"
               value={username}
               onChange={usernameChange}
-              autoComplete="email"
               autoFocus
             />
             <TextField
@@ -115,7 +89,6 @@ export default function AdminLogin() {
               id="password"
               value={password}
               onChange={passwordChange}
-              autoComplete="current-password"
             />
             
             <Button
@@ -131,11 +104,6 @@ export default function AdminLogin() {
               <Grid item xs>
                 <Link to='/' variant="body2">
                  I am a User 
-                </Link>
-              </Grid>
-              <Grid item>
-                <Link href="#" variant="body2">
-                  {"Don't have an account? Sign Up"}
                 </Link>
               </Grid>
             </Grid>
