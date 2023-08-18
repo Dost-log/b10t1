@@ -69,22 +69,31 @@ export default function ShowCustomers() {
   const [text, setText] = React.useState("Edit");
   const [designation, setDesignation] = React.useState('');
   const [department, setDepartment] = React.useState('');
+  const [name, setName] = React.useState('');
 
   const handleEdit = () => {
     setText("Save");
     setCounter(false);
   }
 
-  const handleSave = () => {
+  const handleSave = (row) => {
     setText("Edit");
     setCounter(true);
-    axios.put(editUrl,{
+    axios.post(editUrl, {
+      employeeId: row.employeeId,
+      name: name,
+      designation: designation,
+      gender: row.gender,
+      department: department,
+      dob: row.dob,
+      doj: row.doj,
+      password: row.password
+    }, {
       headers : {
         'Access-Control-Allow-Origin':'*',
       }
     }).then((response) => {
       console.log(response);
-      getData();
     }).catch((error) => {
       //alert("User Already Exists");
     });
@@ -97,6 +106,10 @@ export default function ShowCustomers() {
 
   const departmentChange = (event) => {
     setDepartment(event.target.value);
+  }
+
+  const nameChange = (event) => {
+    setName(event.target.value);
   }
 
   return (
@@ -143,7 +156,12 @@ export default function ShowCustomers() {
               </TableCell>
               <TableCell align="right">
                 {!counter?
-                (<TextField variant='standard' defaultValue={row.name} sx={{maxWidth : 100}}/>):
+                (<TextField 
+                  variant='standard' 
+                  defaultValue={row.name} 
+                  sx={{maxWidth : 100}}
+                  value={name}
+                  onChange={nameChange}/>):
                 (row.name)}</TableCell>
               <TableCell align="right">
                 {!counter?
@@ -186,7 +204,7 @@ export default function ShowCustomers() {
               <TableCell align="right">{row.dob.substring(0,10)}</TableCell>
               <TableCell align="right">{row.doj.substring(0,10)}</TableCell>
               <TableCell align='right'>
-                <Button onClick={counter ? () => handleEdit() : () => handleSave()}>
+                <Button onClick={counter ? () => handleEdit() : () => handleSave(row)}>
                   {text}
                 </Button>
               </TableCell>
