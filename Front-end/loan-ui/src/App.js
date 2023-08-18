@@ -6,6 +6,7 @@ import AdminDashboard from './components/adminDashboard';
 import AddCustomerData from './components/addCustomerData';
 import UserApplyForLoan from './components/userApplyForLoan'
 import {Routes, Route, Navigate, BrowserRouter} from 'react-router-dom'
+import ShowCustomers from './components/showCustomers'
 import './App.css';
 
 function App() {
@@ -18,6 +19,7 @@ function App() {
         <Route path='/admin-dashboard' element={<AdminDashboard/>} />
         <Route path='/admin-dashboard/add-customer-data' element={<AddCustomerData />} />
         <Route path='/user-dashboard/apply-for-loan' element={<UserApplyForLoan />} />
+        <Route path='/show-customers' element={<ShowCustomers/>}/>
       </Routes>
     </BrowserRouter>
   );

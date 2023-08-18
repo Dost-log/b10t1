@@ -1,11 +1,8 @@
 import * as React from 'react';
-import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
-import Link from '@mui/material/Link';
+import {Link} from 'react-router-dom'
 import Grid from '@mui/material/Grid';
 import { FormControl, InputLabel, MenuItem, Select } from '@mui/material';
 import Box from '@mui/material/Box';
@@ -17,7 +14,6 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import {DatePicker} from '@mui/x-date-pickers/DatePicker'
 import dayjs from 'dayjs';
 import axios from 'axios';
-// import response from 'express';
 
 
 const defaultTheme = createTheme();
@@ -195,7 +191,7 @@ export default function AddCustomerData() {
             </Button>
             <Grid container>
               <Grid item xs>
-                <Link to='/' variant="body2">
+                <Link to='/show-customers' variant="body2">
                   View Existing Users
                 </Link>
               </Grid>
