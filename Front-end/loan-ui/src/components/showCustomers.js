@@ -19,11 +19,15 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
+import { FormControl, InputLabel, MenuItem, Select } from '@mui/material';
+
 
 
 const defaultTheme = createTheme();
 
-const url = "http://localhost:5174/api/EmployeeMasters/GetAllEmployeeMasters";
+const getAllUrl = "http://localhost:5174/api/EmployeeMasters/GetAllEmployeeMasters";
+const deleteUrl = "http://localhost:5174/api/EmployeeMasters/DeleteEmployee";
+const editUrl = "http://localhost:5174/api/EmployeeMasters/EditEmployee";
 
 export default function ShowCustomers() {
   
@@ -31,24 +35,68 @@ export default function ShowCustomers() {
 
   const getData = ()=>{
 
-  axios.get(url,{
-    headers : {
-      'Access-Control-Allow-Origin':'*',
+    axios.get(getAllUrl,{
+      headers : {
+        'Access-Control-Allow-Origin':'*',
+      }
+    }).then((response) => {
+      setRows(response.data);
+    }).catch((error) => {
+      //alert("User Already Exists");
+    });
+  }
+
+  React.useEffect(()=>{
+    getData()
+  },[])
+
+  const handleDelete = (employeeId) => {
+    var result = window.confirm("Are you sure you want to delete?");
+    if(result) {
+      axios.delete(deleteUrl + "?id=" + employeeId,{
+        headers : {
+          'Access-Control-Allow-Origin':'*',
+        }
+      }).then((response) => {
+        console.log(response);
+        getData();
+      }).catch((error) => {
+        //alert("User Already Exists");
+      });
     }
-  }).then((response) => {
-    setRows(response.data);
-  }).catch((error) => {
-    //alert("User Already Exists");
-  });
-}
+  }
+  const [counter, setCounter] = React.useState(true);
+  const [text, setText] = React.useState("Edit");
+  const [designation, setDesignation] = React.useState('');
+  const [department, setDepartment] = React.useState('');
 
-React.useEffect(()=>{
-getData()
-},[])
+  const handleEdit = () => {
+    setText("Save");
+    setCounter(false);
+  }
 
-  console.log(rows);
-  const change = (row) => {
-    
+  const handleSave = () => {
+    setText("Edit");
+    setCounter(true);
+    axios.put(editUrl,{
+      headers : {
+        'Access-Control-Allow-Origin':'*',
+      }
+    }).then((response) => {
+      console.log(response);
+      getData();
+    }).catch((error) => {
+      //alert("User Already Exists");
+    });
+
+  }
+
+  const designationChange = (event) => {
+    setDesignation(event.target.value);
+  }
+
+  const departmentChange = (event) => {
+    setDepartment(event.target.value);
   }
 
   return (
@@ -80,10 +128,12 @@ getData()
             <TableCell align="right">Gender</TableCell>
             <TableCell align="right">Date of Birth</TableCell>
             <TableCell align="right">Date of Joining</TableCell>
+            <TableCell align="right">Change Details</TableCell>
+            <TableCell align="right">Caution!!</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((row, index) => (
+          {rows.map((row) => (
             <TableRow
               key={row.employeeId}
               sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
@@ -91,14 +141,56 @@ getData()
               <TableCell component="th" scope="row">
                 {row.employeeId}
               </TableCell>
-              <TableCell align="right">{row.name}</TableCell>
-              <TableCell align="right">{row.designation}</TableCell>
-              <TableCell align="right">{row.department}</TableCell>
+              <TableCell align="right">
+                {!counter?
+                (<TextField variant='standard' defaultValue={row.name} sx={{maxWidth : 100}}/>):
+                (row.name)}</TableCell>
+              <TableCell align="right">
+                {!counter?
+                (<FormControl sx={{maxWidth : 100}}>
+                  <InputLabel id="designation-select-label"></InputLabel>
+                    <Select
+                      labelId='designation-select-label'
+                      id="designation"
+                      value={designation}
+                      defaultValue={row.designation}
+                      
+                      onChange={designationChange}
+                      >
+                      <MenuItem value={"Manager"}>Manager</MenuItem>
+                      <MenuItem value={"CEO"}>CEO</MenuItem>
+                      <MenuItem value={"Software Developer"}>Software Developer</MenuItem>
+                    </Select>
+                  </FormControl>):
+                  (row.designation)}
+              </TableCell>
+              <TableCell align="right">
+                {!counter?
+                (<FormControl sx={{maxWidth : 100}}>
+                  <InputLabel id="department-select-label"></InputLabel>
+                    <Select
+                      labelId='department-select-label'
+                      id="department"
+                      defaultValue={row.department}
+                      onChange={departmentChange}
+                      value={department}
+                      >
+                      <MenuItem value={"Technology"}>Technology</MenuItem>
+                      <MenuItem value={"Finance"}>Finance</MenuItem>
+                      <MenuItem value={"H.R."}>H.R.</MenuItem>
+                    </Select>
+                  </FormControl>):
+                  (row.department)}
+              </TableCell>
               <TableCell align="right">{row.gender}</TableCell>
-              <TableCell align="right">{row.dob}</TableCell>
-              <TableCell align="right">{row.doj}</TableCell>
-              <TableCell align='right'><Button onClick={()=>change(index)}>Edit</Button></TableCell>
-              <TableCell align='right'><Button>Delete</Button></TableCell>
+              <TableCell align="right">{row.dob.substring(0,10)}</TableCell>
+              <TableCell align="right">{row.doj.substring(0,10)}</TableCell>
+              <TableCell align='right'>
+                <Button onClick={counter ? () => handleEdit() : () => handleSave()}>
+                  {text}
+                </Button>
+              </TableCell>
+              <TableCell align='right'><Button onClick={() => handleDelete(row.employeeId)}>Delete</Button></TableCell>
             </TableRow>
           ))}
         </TableBody>
