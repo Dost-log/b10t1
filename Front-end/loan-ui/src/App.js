@@ -17,8 +17,8 @@ function App() {
         <Route path='/admin-login' element={<AdminLogin/>} />
         <Route path='/user-dashboard' element={<UserDashboard/>} />
         <Route path='/admin-dashboard' element={<AdminDashboard/>} />
-        <Route path='/admin-dashboard/add-customer-data' element={<AddCustomerData />} />
-        <Route path='/user-dashboard/apply-for-loan' element={<UserApplyForLoan />} />
+        <Route path='/add-customer-data' element={<AddCustomerData />} />
+        <Route path='/apply-for-loan' element={<UserApplyForLoan />} />
         <Route path='/show-customers' element={<ShowCustomers/>}/>
       </Routes>
     </BrowserRouter>

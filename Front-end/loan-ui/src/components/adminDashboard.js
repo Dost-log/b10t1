@@ -22,7 +22,7 @@ export default function AdminDashboard() {
   const navigate = useNavigate();
 
   const CustomerDataManagement = () => {
-    navigate('\add-customer-data');
+    navigate('/add-customer-data');
   }
 
 

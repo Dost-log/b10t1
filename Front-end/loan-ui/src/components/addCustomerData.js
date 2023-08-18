@@ -46,6 +46,7 @@ export default function AddCustomerData() {
       }
     }).then((response) => {
       console.log(response);
+      alert("User Added");
     }).catch((error) => {
       alert("User Already Exists");
     })

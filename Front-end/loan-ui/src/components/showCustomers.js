@@ -26,32 +26,25 @@ const defaultTheme = createTheme();
 const url = "http://localhost:5174/api/EmployeeMasters/GetAllEmployeeMasters";
 
 export default function ShowCustomers() {
-
-  function createData(employeeId, name, designation, department, gender, dob, doj) {
-    return { employeeId, name, designation, department, gender, dob, doj};
-  }
   
   const [rows, setRows] = React.useState([]);
+
+  const getData = ()=>{
 
   axios.get(url,{
     headers : {
       'Access-Control-Allow-Origin':'*',
     }
   }).then((response) => {
-    const arr = response.data;
-    for(let i = 0; i < arr.length; i++) {
-      rows.push(createData(
-        arr[i].employeeId, 
-        arr[i].name, 
-        arr[i].designation, 
-        arr[i].department,
-        arr[i].gender,
-        arr[i].dob,
-        arr[i].doj));
-    }
+    setRows(response.data);
   }).catch((error) => {
     //alert("User Already Exists");
   });
+}
+
+React.useEffect(()=>{
+getData()
+},[])
 
   console.log(rows);
   const change = (row) => {

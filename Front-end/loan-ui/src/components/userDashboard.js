@@ -22,7 +22,7 @@ export default function UserDashboard() {
 
     const navigate = useNavigate();
     const UserApplyLoan = () => {
-        navigate('\apply-for-loan');
+        navigate('/apply-for-loan');
     }
 
   return (
