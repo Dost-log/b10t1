@@ -7,6 +7,8 @@ import AddCustomerData from './components/addCustomerData';
 import UserApplyForLoan from './components/userApplyForLoan'
 import {Routes, Route, Navigate, BrowserRouter} from 'react-router-dom'
 import ShowCustomers from './components/showCustomers'
+import LoanCardMaster from './components/loanCardMaster';
+import ItemMaster from './components/itemMaster';
 import './App.css';
 
 function App() {
@@ -20,6 +22,8 @@ function App() {
         <Route path='/add-customer-data' element={<AddCustomerData />} />
         <Route path='/apply-for-loan' element={<UserApplyForLoan />} />
         <Route path='/show-customers' element={<ShowCustomers/>}/>
+        <Route path='/loan-card-master' element={<LoanCardMaster/>}/>
+        <Route path='/item-master' element={<ItemMaster/>}/>
       </Routes>
     </BrowserRouter>
   );
