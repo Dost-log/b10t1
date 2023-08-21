@@ -33,7 +33,7 @@ export default function ShowCustomers() {
   
   const [rows, setRows] = React.useState([]);
 
-  const getData = ()=>{
+  const getData = ()=> {
 
     axios.get(getAllUrl,{
       headers : {
@@ -46,7 +46,7 @@ export default function ShowCustomers() {
     });
   }
 
-  React.useEffect(()=>{
+  React.useEffect(()=> {
     getData()
   },[])
 
@@ -97,10 +97,11 @@ export default function ShowCustomers() {
       }
     }).then((response) => {
       console.log(response);
+      getData();
     }).catch((error) => {
       //alert("User Already Exists");
     });
-    getData();
+    
   }
 
   const designationChange = (event) => {
