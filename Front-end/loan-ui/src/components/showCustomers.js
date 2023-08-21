@@ -162,7 +162,7 @@ export default function ShowCustomers() {
                   sx={{maxWidth : 100}}
                   value={name}
                   onChange={nameChange}/>):
-                (row.name)}</TableCell>
+                  (row.name)}</TableCell>
               <TableCell align="right">
                 {counter === row.employeeId ?
                 (<FormControl sx={{maxWidth : 100}}>
