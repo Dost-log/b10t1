@@ -65,20 +65,20 @@ export default function ShowCustomers() {
       });
     }
   }
-  const [counter, setCounter] = React.useState(true);
+  const [counter, setCounter] = React.useState(0);
   const [text, setText] = React.useState("Edit");
   const [designation, setDesignation] = React.useState('');
   const [department, setDepartment] = React.useState('');
   const [name, setName] = React.useState('');
 
-  const handleEdit = () => {
+  const handleEdit = (row) => {
     setText("Save");
-    setCounter(false);
+    setCounter(row.employeeId);
   }
 
   const handleSave = (row) => {
     setText("Edit");
-    setCounter(true);
+    setCounter(0);
     axios.post(editUrl, {
       employeeId: row.employeeId,
       name: name,
@@ -155,7 +155,7 @@ export default function ShowCustomers() {
                 {row.employeeId}
               </TableCell>
               <TableCell align="right">
-                {!counter?
+                {counter === row.employeeId ?
                 (<TextField 
                   variant='standard' 
                   defaultValue={row.name} 
@@ -164,7 +164,7 @@ export default function ShowCustomers() {
                   onChange={nameChange}/>):
                 (row.name)}</TableCell>
               <TableCell align="right">
-                {!counter?
+                {counter === row.employeeId ?
                 (<FormControl sx={{maxWidth : 100}}>
                   <InputLabel id="designation-select-label"></InputLabel>
                     <Select
@@ -183,7 +183,7 @@ export default function ShowCustomers() {
                   (row.designation)}
               </TableCell>
               <TableCell align="right">
-                {!counter?
+                {counter === row.employeeId ?
                 (<FormControl sx={{maxWidth : 100}}>
                   <InputLabel id="department-select-label"></InputLabel>
                     <Select
@@ -204,7 +204,7 @@ export default function ShowCustomers() {
               <TableCell align="right">{row.dob.substring(0,10)}</TableCell>
               <TableCell align="right">{row.doj.substring(0,10)}</TableCell>
               <TableCell align='right'>
-                <Button onClick={counter ? () => handleEdit() : () => handleSave(row)}>
+                <Button onClick={counter === row.employeeId ? () => handleSave(row) : () => handleEdit(row)}>
                   {text}
                 </Button>
               </TableCell>
