@@ -1,32 +1,17 @@
-// loan management application
-// select product and apply for loan
-// employee id textbox || item category DropDown
-// item description textbox || item value textbox
-// itemmake DropDown
-
-// Apply loan button
-
 import * as React from 'react';
-import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
-import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import { FormControl, InputLabel, MenuItem, Select } from '@mui/material';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import {DatePicker} from '@mui/x-date-pickers/DatePicker'
-import dayjs from 'dayjs';
+
 
 const defaultTheme = createTheme();
-const url = "";
+const postUrl = "";
 
 export default function UserApplyForLoan(){
     const [employeeId, setEmployeeId] = React.useState('');
