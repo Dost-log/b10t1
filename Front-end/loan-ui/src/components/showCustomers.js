@@ -74,6 +74,9 @@ export default function ShowCustomers() {
   const handleEdit = (row) => {
     setText("Save");
     setCounter(row.employeeId);
+    setDepartment(row.department);
+    setDesignation(row.designation);
+    setName(row.name);
   }
 
   const handleSave = (row) => {
@@ -97,7 +100,7 @@ export default function ShowCustomers() {
     }).catch((error) => {
       //alert("User Already Exists");
     });
-
+    getData();
   }
 
   const designationChange = (event) => {
