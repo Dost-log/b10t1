@@ -12,6 +12,7 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import {Link, useNavigate} from 'react-router-dom';
 import axios from 'axios';
+import { AppBar, Toolbar } from '@mui/material';
 
 
 
@@ -50,10 +51,14 @@ export default function UserLogin() {
 
   return (
     <ThemeProvider theme={defaultTheme}>
-      <Typography variant='h2' align='center' marginTop={5}>
+      <AppBar position="static">
+        <Toolbar>
+          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             Loan Management System
           </Typography>
-      <Container component="main" maxWidth="xs">
+        </Toolbar>
+      </AppBar>
+      <Container sx={{ border : 1, marginTop : 5, paddingBottom : 5, borderRadius : 2}} component="main" maxWidth="xs">
         <CssBaseline />
         
         <Box
@@ -65,7 +70,7 @@ export default function UserLogin() {
           }}
         >
           
-          <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+          <Avatar sx={{ m: 1, bgcolor: 'primary.main' }}>
   
           </Avatar>
           <Typography component="h1" variant="h5">

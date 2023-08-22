@@ -10,6 +10,7 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import axios from 'axios';
+import { AppBar, Toolbar } from '@mui/material';
 
 
 const defaultTheme = createTheme();
@@ -46,10 +47,14 @@ export default function AdminLogin() {
 
   return (
     <ThemeProvider theme={defaultTheme}>
-      <Typography variant='h2' align='center' marginTop={5}>
+      <AppBar position="static">
+        <Toolbar>
+          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             Loan Management System
           </Typography>
-      <Container component="main" maxWidth="xs">
+        </Toolbar>
+      </AppBar>
+      <Container sx={{ border : 1, marginTop : 5, paddingBottom : 5, borderRadius : 2}} component="main" maxWidth="xs">
         <CssBaseline />
         
         <Box
@@ -61,7 +66,7 @@ export default function AdminLogin() {
           }}
         >
           
-          <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+          <Avatar sx={{ m: 1, bgcolor: 'primary.main' }}>
             {/* <LockOutlinedIcon /> */}
           </Avatar>
           <Typography component="h1" variant="h5">

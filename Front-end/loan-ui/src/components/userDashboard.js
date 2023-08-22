@@ -12,6 +12,7 @@ import Grid from '@mui/material/Grid';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import axios from 'axios';
+import Navbar from './navbar';
 
 
 const defaultTheme = createTheme();
@@ -27,10 +28,8 @@ export default function UserDashboard() {
 
   return (
     <ThemeProvider theme={defaultTheme}>
-      <Typography variant='h2' align='center' marginTop={5}>
-            Loan Management System
-          </Typography>
-      <Container component="main" maxWidth="xs">
+      <Navbar/>
+      <Container sx={{ border : 1, marginTop : 5, paddingBottom : 5, borderRadius : 2}} component="main" maxWidth="xs">
         <CssBaseline />
         
         

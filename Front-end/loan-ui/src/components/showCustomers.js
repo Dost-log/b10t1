@@ -145,8 +145,8 @@ export default function ShowCustomers() {
             <TableCell align="right">Gender</TableCell>
             <TableCell align="right">Date of Birth</TableCell>
             <TableCell align="right">Date of Joining</TableCell>
-            <TableCell align="right">Change Details</TableCell>
-            <TableCell align="right">Caution!!</TableCell>
+            <TableCell align="right"></TableCell>
+            <TableCell align="left">Actions</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -208,11 +208,11 @@ export default function ShowCustomers() {
               <TableCell align="right">{row.dob.substring(0,10)}</TableCell>
               <TableCell align="right">{row.doj.substring(0,10)}</TableCell>
               <TableCell align='right'>
-                <Button onClick={counter === row.employeeId ? () => handleSave(row) : () => handleEdit(row)}>
+                <Button sx={{color : (counter === row.employeeId ? "green" : "")}} onClick={counter === row.employeeId ? () => handleSave(row) : () => handleEdit(row)}>
                   {text}
                 </Button>
               </TableCell>
-              <TableCell align='right'><Button onClick={() => handleDelete(row.employeeId)}>Delete</Button></TableCell>
+              <TableCell align='right'><Button sx={{color : "red"}} onClick={() => handleDelete(row.employeeId)}>Delete</Button></TableCell>
             </TableRow>
           ))}
         </TableBody>

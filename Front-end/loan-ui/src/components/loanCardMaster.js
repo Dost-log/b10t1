@@ -55,11 +55,11 @@ export default function LoanCardMaster(){
     // }
 
     const handleIncrement = (event) => {
-        setState(state+1);
+        setState(state + 1);
     };
 
     const handleDecrement = (event) => {
-        setState(state -1);
+        setState(state > 0 ? state - 1 : state);
     };
         return(
         <ThemeProvider theme={defaultTheme}>
@@ -111,7 +111,10 @@ export default function LoanCardMaster(){
                 </FormControl>
               </Grid>
               <Grid item xs={12} sm={6}>
-                <ButtonGroup size="small" aria-label="small outlined button group">
+                <Typography variant="h5" align='right'>Duration</Typography>
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <ButtonGroup size="small" aria-label="small outlined button group" label="Duration">
                 <Button onClick={handleIncrement}>+</Button>
                 <Button disabled>{state}</Button>
                 <Button onClick={handleDecrement}>-</Button>
