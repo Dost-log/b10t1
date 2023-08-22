@@ -1,4 +1,5 @@
 ﻿using Backend.Entities;
+using Backend.DTO;
 
 namespace Backend.Interfaces
 {

@@ -4,11 +4,20 @@ namespace Backend.Entities
 {
     public class EmployeeIssues
     {
+
+        /*[Key]
+        [Column(TypeName = "varchar")]
+        [StringLength(6)]*/
+        [Key]
+        [Column(TypeName = "int")]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int issueId { get; set; }
+
         [Required]
         [ForeignKey("EmployeeMaster")]
         [Column(TypeName = "varchar")]
         [StringLength(6)]
-        public int EmployeeId { get; set; }
+        public string EmployeeId { get; set; }
 
         [Required]
         [ForeignKey("ItemMaster")]
@@ -16,20 +25,11 @@ namespace Backend.Entities
         [StringLength(6)]
         public string itemId { get; set; }
 
-        [Column(TypeName = "varchar")]
-        [StringLength(25)]
-        public string Designation { get; set; }
-
-
-        [Key]
-        [Column(TypeName = "varchar")]
-        [StringLength(6)]
-        public string issueId { get; set; }
+        [Column(TypeName = "DateTime")]
+        public DateTime issue_date { get; set; }
 
         [Column(TypeName = "DateTime")]
         public DateTime return_date { get; set; }
 
-        [Column(TypeName = "DateTime")]
-        public DateTime issue_date { get; set; }
     }
 }

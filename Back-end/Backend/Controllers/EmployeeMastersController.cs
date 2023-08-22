@@ -4,6 +4,7 @@ using Backend.Entities;
 using Backend.Interfaces;
 using Backend.Repositories;
 using Backend.Services;
+using Backend.DTO;
 
 namespace Backend.Controllers
 {
@@ -109,6 +110,42 @@ namespace Backend.Controllers
             try
             {
                 return StatusCode(200, _employeeMastersRepository.GetAllEmployeeMasters());
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status417ExpectationFailed, ex.Message);
+            }
+        }
+        [HttpPost]
+        public IActionResult ApplyLoan(ApplyLoanDTO applyLoanDTO)
+        {
+            try
+            {
+                return StatusCode(200, _employeeMastersRepository.ApplyLoan(applyLoanDTO));
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status417ExpectationFailed, ex.Message);
+            }
+        }
+        [HttpPost]
+        public IActionResult LoanCardsAvailed(string id)
+        {
+            try
+            {
+                return StatusCode(200, _employeeMastersRepository.LoanCardsAvailed(id));
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status417ExpectationFailed, ex.Message);
+            }
+        }
+        [HttpPost]
+        public IActionResult ItemsPurchased(string id)
+        {
+            try
+            {
+                return StatusCode(200, _employeeMastersRepository.ItemsPurchased(id));
             }
             catch (Exception ex)
             {

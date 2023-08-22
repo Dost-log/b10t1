@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 namespace Backend.Entities
 {
@@ -20,6 +21,7 @@ namespace Backend.Entities
         public string make { get; set; }
 
         [Column(TypeName = "char")]
+        [DefaultValue('Y')]
         public char status { get; set; }
 
         [Column(TypeName = "varchar")]
@@ -27,7 +29,6 @@ namespace Backend.Entities
         public string category { get; set; }
 
         [Column(TypeName = "int")]
-        
         public int valuation { get; set; }
 
     }

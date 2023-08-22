@@ -4,10 +4,10 @@ namespace Backend.Interfaces
 {
     public interface IEmployeeIssuesRepository
     {
-        EmployeeIssues GetEmployeeIssue(string id);
+        EmployeeIssues GetEmployeeIssue(int id);
         void AddEmployeeIssue(EmployeeIssues employeeIssues);
         void EditEmployeeIssue(EmployeeIssues employeeIssues);
-        void DeleteEmployeeIssue(string id);
+        void DeleteEmployeeIssue(int id);
         List<EmployeeIssues> GetAllEmployeeIssues();
     }
 }

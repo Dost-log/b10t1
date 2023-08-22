@@ -18,7 +18,7 @@ namespace Backend.Controllers
             this._employeeIssuesRepository = _employeeIssuesRepository;
         }
         [HttpGet]
-        public ActionResult GetEmployeeIssue(string id)
+        public ActionResult GetEmployeeIssue(int id)
         {
             try
             {
@@ -63,7 +63,7 @@ namespace Backend.Controllers
         }
 
         [HttpDelete]
-        public ActionResult DeleteEmployeeCard(string id)
+        public ActionResult DeleteEmployeeCard(int id)
         {
             try
             {
