@@ -10,7 +10,7 @@ namespace Backend.Services
         {
             this._dbconnect =_dbconnect;    
         }
-        public EmployeeIssues GetEmployeeIssue(string id)
+        public EmployeeIssues GetEmployeeIssue(int id)
         {
             var employeeIssue = _dbconnect.EmployeeIssues.FirstOrDefault(x => x.issueId == id);
             return employeeIssue;
@@ -22,7 +22,7 @@ namespace Backend.Services
             _dbconnect.SaveChanges();
         }
         
-        public void DeleteEmployeeIssue(string id)
+        public void DeleteEmployeeIssue(int id)
         {
             EmployeeIssues employeeIssues = _dbconnect.EmployeeIssues.Find(id);
             _dbconnect.EmployeeIssues.Remove(employeeIssues);

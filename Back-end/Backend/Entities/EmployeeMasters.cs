@@ -16,6 +16,7 @@ namespace Backend.Entities
         [Required]
         [Column(TypeName = "varchar")]
         [StringLength(20)]
+        
         public string name { get; set; }
 
         [Column(TypeName = "varchar")]

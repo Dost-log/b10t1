@@ -1,4 +1,5 @@
-﻿using Backend.Entities;
+﻿using Backend.DTO;
+using Backend.Entities;
 using Backend.Interfaces;
 
 namespace Backend.Services

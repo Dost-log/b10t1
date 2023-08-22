@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Backend.Entities;
 using Backend.Interfaces;
 using Backend.Repositories;
+using Backend.DTO;
 
 namespace Backend.Controllers
 {

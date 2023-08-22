@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 namespace Backend.Entities
 {
@@ -14,6 +15,10 @@ namespace Backend.Entities
         [Column(TypeName = "varchar")]
         [StringLength(15)]
         public string loan_type { get; set; }
+
+        [Column(TypeName = "char")]
+        [DefaultValue('Y')]
+        public char status { get; set; }
 
         [Column(TypeName = "int")]
         public int duration { get; set; }
