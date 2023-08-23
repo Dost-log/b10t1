@@ -44,6 +44,8 @@ export default function UserLogin() {
     }).then((response) => {
       navigate('/user-dashboard');
       console.log(response);
+      const user = {username : username, password : password};
+      localStorage.setItem('user', JSON.stringify(user));
     }).catch((error) => {
       alert("Wrong credentials");
     });

@@ -9,7 +9,8 @@ import { useNavigate } from 'react-router-dom';
 export default function ButtonAppBar() {
     const navigate = useNavigate();
     const handleClick = () => {
-        navigate("/")
+      localStorage.clear()
+      navigate("/")
     }
 
   return (

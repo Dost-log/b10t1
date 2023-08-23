@@ -9,6 +9,10 @@ import {Routes, Route, Navigate, BrowserRouter} from 'react-router-dom'
 import ShowCustomers from './components/showCustomers'
 import LoanCardMaster from './components/loanCardMaster';
 import AddItem from './components/addItem';
+import LoanCardsAvailed from './components/loanCardsAvailed';
+import ItemsPurchased from './components/itemsPurchased';
+import ItemMaster from './components/itemMaster';
+import LoanData from './components/loanData';
 import './App.css';
 
 function App() {
@@ -24,6 +28,10 @@ function App() {
         <Route path='/show-customers' element={<ShowCustomers/>}/>
         <Route path='/loan-card-master' element={<LoanCardMaster/>}/>
         <Route path='/add-item' element={<AddItem/>}/>
+        <Route path='/loan-cards-availed' element={<LoanCardsAvailed/>}/>
+        <Route path='/items-purchased' element={<ItemsPurchased/>}/>
+        <Route path='/item-master' element={<ItemMaster/>}/>
+        <Route path='/loan-data' element={<LoanData/>}/>
       </Routes>
     </BrowserRouter>
   );
