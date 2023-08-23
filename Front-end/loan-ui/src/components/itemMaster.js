@@ -175,6 +175,26 @@ export default function ItemMaster() {
                   </FormControl>):
                   (row.issueStatus)}
               </TableCell>
+              
+              <TableCell component="th" scope="row">
+                {row.itemMake}
+              </TableCell>
+
+              <TableCell component="th" scope="row">
+                {row.itemCategory}
+              </TableCell>
+              
+              <TableCell align="right">
+                {counter === row.itemID ?
+                (<TextField 
+                  variant='standard' 
+                  defaultValue={row.itemValuation} 
+                  sx={{maxWidth : 100}}
+                  value={itemValuation}
+                  onChange={itemValuationChange}/>):
+                  (row.itemValuation)}
+              </TableCell>
+
               <TableCell align='right'>
                 <Button sx={{color : (counter === row.itemID ? "green" : "")}} onClick={counter === row.itemID ? () => handleSave(row) : () => handleEdit(row)}>
                   {text}
