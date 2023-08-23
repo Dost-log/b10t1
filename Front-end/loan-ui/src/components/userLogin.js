@@ -48,6 +48,7 @@ export default function UserLogin() {
           department: response.data.department,
           password: password,
         };
+        localStorage.clear();
         localStorage.setItem("user", JSON.stringify(user));
       })
       .catch((error) => {

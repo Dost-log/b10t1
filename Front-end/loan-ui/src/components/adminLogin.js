@@ -39,11 +39,23 @@ export default function AdminLogin() {
       })
       .then((response) => {
         navigate("/admin-dashboard");
+        const admin = {
+          username: username,
+        };
+        localStorage.clear();
+        localStorage.setItem("admin", JSON.stringify(admin));
       })
       .catch((error) => {
         alert("Wrong credentials");
       });
   };
+
+  React.useEffect(() => {
+    const admin = localStorage.getItem("admin");
+    if (admin) {
+      navigate("/admin-dashboard");
+    }
+  }, []);
 
   return (
     <ThemeProvider theme={defaultTheme}>
