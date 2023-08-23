@@ -1,81 +1,84 @@
-import * as React from 'react';
-import Button from '@mui/material/Button';
-import CssBaseline from '@mui/material/CssBaseline';
-import TextField from '@mui/material/TextField';
-import Grid from '@mui/material/Grid';
-import { FormControl, InputLabel, MenuItem, Select } from '@mui/material';
-import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
-import Container from '@mui/material/Container';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
-import axios from 'axios';
-
+import * as React from "react";
+import Button from "@mui/material/Button";
+import CssBaseline from "@mui/material/CssBaseline";
+import TextField from "@mui/material/TextField";
+import Grid from "@mui/material/Grid";
+import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
+import Box from "@mui/material/Box";
+import Typography from "@mui/material/Typography";
+import Container from "@mui/material/Container";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+import axios from "axios";
+import Navbar from "./navbar";
 
 const defaultTheme = createTheme();
 const url = "http://localhost:5174/api/EmployeeMasters/ApplyLoan";
 
-export default function UserApplyForLoan(){
-    const [employeeId, setEmployeeId] = React.useState('');
-    const [itemCategory, setItemCategory] = React.useState('');
-    const [itemDescription, setItemDescription] = React.useState('');
-    const [itemValue, setItemValue] = React.useState('');
-    const [itemMake, setItemMake] = React.useState('');
+export default function UserApplyForLoan() {
+  const [employeeId, setEmployeeId] = React.useState("");
+  const [itemCategory, setItemCategory] = React.useState("");
+  const [itemDescription, setItemDescription] = React.useState("");
+  const [itemValue, setItemValue] = React.useState("");
+  const [itemMake, setItemMake] = React.useState("");
 
-    const handleSubmit = (event) => {
-      axios.post(url, {
-        employeeId : employeeId,
-        category :itemCategory,
-        descprition : itemDescription,
-        valuation : itemValue,
-        make : itemMake
-      }, {
-        headers : {
-          'Access-Control-Allow-Origin':'*',
+  const handleSubmit = (event) => {
+    axios
+      .post(
+        url,
+        {
+          employeeId: employeeId,
+          category: itemCategory,
+          descprition: itemDescription,
+          valuation: itemValue,
+          make: itemMake,
+        },
+        {
+          headers: {
+            "Access-Control-Allow-Origin": "*",
+          },
         }
-      }).then((response) => {
+      )
+      .then((response) => {
         alert(response.data);
-      }).catch((error) => {
+      })
+      .catch((error) => {
         alert("No item with such details exists");
       });
-    }
+  };
 
+  const employeeIdChange = (event) => {
+    setEmployeeId(event.target.value);
+  };
 
-    const employeeIdChange = (event) => {
-        setEmployeeId(event.target.value);
-    }
+  const itemCategoryChange = (event) => {
+    setItemCategory(event.target.value);
+  };
 
-    const itemCategoryChange = (event) => {
-        setItemCategory(event.target.value);
-    }
+  const itemDescriptionChange = (event) => {
+    setItemDescription(event.target.value);
+  };
 
-    const itemDescriptionChange = (event) => {
-        setItemDescription(event.target.value);
-    }
+  const itemValueChange = (event) => {
+    setItemValue(event.target.value);
+  };
 
-    const itemValueChange = (event) =>{
-        setItemValue(event.target.value);
-    }
+  const itemMakeChange = (event) => {
+    setItemMake(event.target.value);
+  };
 
-    const itemMakeChange = (event) => {
-        setItemMake(event.target.value);
-    }
-
-    return (
+  return (
     <ThemeProvider theme={defaultTheme}>
-      <Typography variant='h2' align='center' marginTop={5}>
-            Loan Management Application
-      </Typography>
+      <Navbar />
       <Container component="main" maxWidth="xs">
         <CssBaseline />
         <Box
           sx={{
             marginTop: 5,
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
           }}
         >
-          
           <Typography component="h1" variant="h5">
             Select Product and Apply for Loan
           </Typography>
@@ -96,17 +99,20 @@ export default function UserApplyForLoan(){
               </Grid>
               <Grid item xs={12} sm={6}>
                 <FormControl fullWidth>
-                <InputLabel id="item-category-select-label">Item Category</InputLabel>
-                <Select
-                  labelId='item-category-select-label'
-                  id="item-category"
-                  label="Item Category"
-                  value={itemCategory}
-                  onChange={itemCategoryChange}>
-                  <MenuItem value={"Furniture"}>Furniture</MenuItem>
-                  <MenuItem value={"Stationary"}>Stationary</MenuItem>
-                  <MenuItem value={"Crockery"}>Crockery</MenuItem>
-                </Select>
+                  <InputLabel id="item-category-select-label">
+                    Item Category
+                  </InputLabel>
+                  <Select
+                    labelId="item-category-select-label"
+                    id="item-category"
+                    label="Item Category"
+                    value={itemCategory}
+                    onChange={itemCategoryChange}
+                  >
+                    <MenuItem value={"Furniture"}>Furniture</MenuItem>
+                    <MenuItem value={"Stationary"}>Stationary</MenuItem>
+                    <MenuItem value={"Crockery"}>Crockery</MenuItem>
+                  </Select>
                 </FormControl>
               </Grid>
               <Grid item xs={12} sm={6}>
@@ -132,24 +138,24 @@ export default function UserApplyForLoan(){
                   onChange={itemValueChange}
                 />
               </Grid>
-              
+
               <Grid item xs={12} sm={6}>
                 <FormControl fullWidth>
-                <InputLabel id="item-make-label">Item Make</InputLabel>
-                <Select
-                  required
-                  labelId='item-make-select-label'
-                  id="itemMake"
-                  label="ItemMake"
-                  onChange={itemMakeChange}
-                  value={itemMake}>
-                  <MenuItem value={"Wooden"}>Wooden</MenuItem>
-                  <MenuItem value={"Plastic"}>Plastic</MenuItem>
-                  <MenuItem value={"Metal"}>Metal</MenuItem>
-                </Select>
+                  <InputLabel id="item-make-label">Item Make</InputLabel>
+                  <Select
+                    required
+                    labelId="item-make-select-label"
+                    id="itemMake"
+                    label="ItemMake"
+                    onChange={itemMakeChange}
+                    value={itemMake}
+                  >
+                    <MenuItem value={"Wooden"}>Wooden</MenuItem>
+                    <MenuItem value={"Plastic"}>Plastic</MenuItem>
+                    <MenuItem value={"Metal"}>Metal</MenuItem>
+                  </Select>
                 </FormControl>
               </Grid>
-              
             </Grid>
             <Button
               type="submit"
@@ -170,7 +176,6 @@ export default function UserApplyForLoan(){
           </Box>
         </Box>
       </Container>
-
     </ThemeProvider>
-    );
+  );
 }

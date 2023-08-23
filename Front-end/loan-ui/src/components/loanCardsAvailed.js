@@ -20,13 +20,14 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
+import Navbar from "./navbar";
 
 const defaultTheme = createTheme();
 const url = "http://localhost:5174/api/EmployeeMasters/LoanCardsAvailed";
 
 export default function LoanCardsAvailed() {
   const [rows, setRows] = React.useState([]);
-  const user = JSON.parse(localStorage.getItem('user'));
+  const user = JSON.parse(localStorage.getItem("user"));
 
   const getData = () => {
     axios
@@ -49,9 +50,7 @@ export default function LoanCardsAvailed() {
 
   return (
     <ThemeProvider theme={defaultTheme}>
-      <Typography variant="h2" align="center" marginTop={5}>
-        Loan Management System
-      </Typography>
+      <Navbar />
       <Container component="main" maxWidth="md">
         <CssBaseline />
         <Box
@@ -66,17 +65,23 @@ export default function LoanCardsAvailed() {
             Loan Cards Availed
           </Typography>
 
-          <Grid container spacing={2} sx={{marginBottom : 10}}>
+          <Grid container spacing={2} sx={{ marginBottom: 10 }}>
             <Grid item xs={12} sm={4}>
-              <Typography align="center" variant="h6">Employee Id : {user.username}</Typography>
+              <Typography align="center" variant="h6">
+                Employee Id : {user.username}
+              </Typography>
             </Grid>
 
             <Grid item xs={12} sm={4}>
-              <Typography align="center" variant="h6">Designation : {user.designation}</Typography>
+              <Typography align="center" variant="h6">
+                Designation : {user.designation}
+              </Typography>
             </Grid>
 
             <Grid item xs={12} sm={4}>
-              <Typography align="center" variant="h6">Department : {user.department}</Typography>
+              <Typography align="center" variant="h6">
+                Department : {user.department}
+              </Typography>
             </Grid>
           </Grid>
 
@@ -84,7 +89,7 @@ export default function LoanCardsAvailed() {
             <Table sx={{ minWidth: 650 }} aria-label="simple table">
               <TableHead>
                 <TableRow>
-                  <TableCell align='left'>Loan ID</TableCell>
+                  <TableCell align="left">Loan ID</TableCell>
                   <TableCell align="right">Loan Type</TableCell>
                   <TableCell align="right">Duration</TableCell>
                   <TableCell align="right">Card Issue Date</TableCell>

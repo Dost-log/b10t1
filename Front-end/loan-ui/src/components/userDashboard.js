@@ -18,7 +18,7 @@ const defaultTheme = createTheme();
 
 export default function UserDashboard() {
   const navigate = useNavigate();
-  
+
   const ApplyLoan = () => {
     navigate("/apply-for-loan");
   };
@@ -73,11 +73,11 @@ export default function UserDashboard() {
               Apply for Loan
             </Button>
 
-            <Button 
-              fullWidth 
-              sx={{ mb: 4 }} 
+            <Button
+              fullWidth
+              sx={{ mb: 4 }}
               onClick={ViewItemsPurchased}
-              variant="outlined" 
+              variant="outlined"
               align="center"
             >
               View Items Purchased
