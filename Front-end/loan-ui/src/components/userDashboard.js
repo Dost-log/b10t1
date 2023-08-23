@@ -19,7 +19,7 @@ const defaultTheme = createTheme();
 export default function UserDashboard() {
   const navigate = useNavigate();
   console.log(JSON.parse(localStorage.getItem('user')));
-  const UserApplyLoan = () => {
+  const ApplyLoan = () => {
     navigate("/apply-for-loan");
   };
 
@@ -66,14 +66,20 @@ export default function UserDashboard() {
             <Button
               fullWidth
               sx={{ mb: 4 }}
-              onClick={UserApplyLoan}
+              onClick={ApplyLoan}
               variant="outlined"
               align="center"
             >
               Apply for Loan
             </Button>
 
-            <Button fullWidth sx={{ mb: 4 }} variant="outlined" align="center">
+            <Button 
+              fullWidth 
+              sx={{ mb: 4 }} 
+              onClick={ViewItemsPurchased}
+              variant="outlined" 
+              align="center"
+            >
               View Items Purchased
             </Button>
           </Box>
