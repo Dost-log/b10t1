@@ -18,7 +18,7 @@ const defaultTheme = createTheme();
 
 export default function UserDashboard() {
   const navigate = useNavigate();
-  console.log(JSON.parse(localStorage.getItem('user')));
+  
   const ApplyLoan = () => {
     navigate("/apply-for-loan");
   };

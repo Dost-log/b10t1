@@ -22,14 +22,15 @@ import Paper from "@mui/material/Paper";
 import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 
 const defaultTheme = createTheme();
-const url = "http://localhost:5174/api/EmployeeMasters/LoanCardsAvailed"
+const url = "http://localhost:5174/api/EmployeeMasters/LoanCardsAvailed";
 
 export default function ShowCustomers() {
   const [rows, setRows] = React.useState([]);
+  const user = JSON.parse(localStorage.getItem('user'));
 
   const getData = () => {
     axios
-      .get(url + "?=", {
+      .get(url + "?=" + user.username, {
         headers: {
           "Access-Control-Allow-Origin": "*",
         },
@@ -43,9 +44,8 @@ export default function ShowCustomers() {
   };
 
   React.useEffect(() => {
-    getData();
+    //getData();
   }, []);
-  
 
   return (
     <ThemeProvider theme={defaultTheme}>
@@ -65,11 +65,26 @@ export default function ShowCustomers() {
           <Typography component="h1" variant="h5" marginBottom={10}>
             Loan Cards Availed
           </Typography>
+
+          <Grid container spacing={2} sx={{marginBottom : 10}}>
+            <Grid item xs={12} sm={4}>
+              <Typography align="center" variant="h6">Employee Id : {user.username}</Typography>
+            </Grid>
+
+            <Grid item xs={12} sm={4}>
+              <Typography align="center" variant="h6">Designation : {user.designation}</Typography>
+            </Grid>
+
+            <Grid item xs={12} sm={4}>
+              <Typography align="center" variant="h6">Department : {user.department}</Typography>
+            </Grid>
+          </Grid>
+
           <TableContainer component={Paper}>
             <Table sx={{ minWidth: 650 }} aria-label="simple table">
               <TableHead>
                 <TableRow>
-                  <TableCell>Loan ID</TableCell>
+                  <TableCell align='left'>Loan ID</TableCell>
                   <TableCell align="right">Loan Type</TableCell>
                   <TableCell align="right">Duration</TableCell>
                   <TableCell align="right">Card Issue Date</TableCell>
@@ -85,7 +100,6 @@ export default function ShowCustomers() {
                     <TableCell align="right">{row.loanType}</TableCell>
                     <TableCell align="right">{row.duration}</TableCell>
                     <TableCell align="right">{row.cardIssueDate}</TableCell>
-                    
                   </TableRow>
                 ))}
               </TableBody>
