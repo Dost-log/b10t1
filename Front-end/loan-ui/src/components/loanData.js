@@ -23,9 +23,9 @@ import { FormControl, InputLabel, MenuItem, Select } from '@mui/material';
 
 const defaultTheme = createTheme();
 
-const getUrl = "";
-const deleteUrl = "";
-const editUrl = "";
+const getUrl = "http://localhost:5174/api/LoanCardMasters/GetAllLoanCardMasters";
+const deleteUrl = "http://localhost:5174/api/LoanCardMasters/DeleteLoanCard";
+const editUrl = "http://localhost:5174/api/LoanCardMasters/EditLoanCard";
 
 export default function LoanData(){
     const [rows, setRows] = React.useState([]);
@@ -47,10 +47,10 @@ export default function LoanData(){
         getData()
       },[])
     
-      const handleDelete = (loanID) => {
+      const handleDelete = (loanId) => {
         var result = window.confirm("Are you sure you want to delete?");
         if(result) {
-          axios.delete(deleteUrl + "?id=" + loanID,{
+          axios.delete(deleteUrl + "?id=" + loanId,{
             headers : {
               'Access-Control-Allow-Origin':'*',
             }
@@ -66,20 +66,23 @@ export default function LoanData(){
       const [text, setText] = React.useState("Edit");
       const [loanType, setLoanType] = React.useState('');
       const [duration, setDuration] = React.useState('');
+      const [status, setStatus] = React.useState('');
       
       const handleEdit = (row) => {
         setText("Save");
-        setCounter(row.loanID);
-        setLoanType(row.loanType);
+        setCounter(row.loanId);
+        setLoanType(row.loan_type);
         setDuration(row.duration);
+        setStatus(row.status);
       }
     
       const handleSave = (row) => {
         setText("Edit");
         setCounter(0);
         axios.post(editUrl, {
-          loanID: row.loanID,
-          loanType: loanType,
+          loanId: row.loanId,
+          loan_type: loanType,
+          status : status,
           duration: duration
         }, {
           headers : {
@@ -100,13 +103,16 @@ export default function LoanData(){
       const durationChange = (event)=>{
         setDuration(event.target.value);
       }
+      const statusChange = (event)=>{
+        setStatus(event.target.value);
+      }
 
       return (
         <ThemeProvider theme={defaultTheme}>
           <Typography variant='h2' align='center' marginTop={5}>
                 Loan Management System
               </Typography>
-          <Container component="main" maxWidth="lg">
+          <Container component="main" maxWidth="md">
             <CssBaseline />
             <Box
               sx={{
@@ -126,6 +132,7 @@ export default function LoanData(){
                 <TableCell>Loan ID</TableCell>
                 <TableCell align="right">Loan Type</TableCell>
                 <TableCell align="right">Duration</TableCell>
+                <TableCell align="right">Status</TableCell>
                 <TableCell align="right"></TableCell>
                 <TableCell align="left">Actions</TableCell>
               </TableRow>
@@ -133,21 +140,21 @@ export default function LoanData(){
             <TableBody>
               {rows.map((row) => (
                 <TableRow
-                  key={row.loanID}
+                  key={row.loanId}
                   sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                 >
                   <TableCell component="th" scope="row">
-                    {row.loanID}
+                    {row.loanId}
                   </TableCell>
                   <TableCell align="right">
-                    {counter === row.loanID ?
+                    {counter === row.loanId ?
                     (<FormControl sx={{maxWidth : 100}}>
                       <InputLabel id="loanType-select-label"></InputLabel>
                         <Select
                           labelId='loanType-select-label'
                           id="loanType"
                           value={loanType}
-                          defaultValue={row.loanType}
+                          defaultValue={row.loan_type}
                           
                           onChange={loanTypeChange}
                           >
@@ -156,10 +163,10 @@ export default function LoanData(){
                           <MenuItem value={"Crockery"}>Crockery</MenuItem>
                         </Select>
                       </FormControl>):
-                      (row.loanType)}
+                      (row.loan_type)}
                   </TableCell>
                   <TableCell align="right">
-                {counter === row.loanID ?
+                {counter === row.loanId ?
                 (<TextField 
                   variant='standard' 
                   defaultValue={row.duration} 
@@ -168,16 +175,31 @@ export default function LoanData(){
                   onChange={durationChange}/>):
                   (row.duration)}
                   </TableCell>
-                {/* <TableCell align="right">{row.gender}</TableCell>
-                  <TableCell align="right">{row.dob.substring(0,10)}</TableCell>
-                  <TableCell align="right">{row.doj.substring(0,10)}</TableCell> */}
+                  <TableCell align="right">
+                    {counter === row.loanId ?
+                    (<FormControl sx={{maxWidth : 100}}>
+                      <InputLabel id="loanType-select-label"></InputLabel>
+                        <Select
+                          labelId='loanType-select-label'
+                          id="loanType"
+                          value={status}
+                          defaultValue={row.status}
+                          
+                          onChange={statusChange}
+                          >
+                          <MenuItem value={"Y"}>Yes</MenuItem>
+                          <MenuItem value={"N"}>No</MenuItem>
+                        </Select>
+                      </FormControl>):
+                      (row.status)}
+                  </TableCell>
                   <TableCell align='right'>
-                    <Button sx={{color : (counter === row.loanID ?"green" : "")}} 
-                         onClick={counter === row.loanID ? () => handleSave(row) : () => handleEdit(row)}>
+                    <Button sx={{color : (counter === row.loanId ?"green" : "")}} 
+                         onClick={counter === row.loanId ? () => handleSave(row) : () => handleEdit(row)}>
                       {text}
                     </Button>
                   </TableCell>
-                  <TableCell align='right'><Button sx={{color : "red"}} onClick={() => handleDelete(row.loanID)}>Delete</Button></TableCell>
+                  <TableCell align='right'><Button sx={{color : "red"}} onClick={() => handleDelete(row.loanId)}>Delete</Button></TableCell>
                 </TableRow>
               ))}
             </TableBody>

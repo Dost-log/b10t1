@@ -35,7 +35,7 @@ const url = "http://localhost:5174/api/LoanCardMasters/AddLoanCard";
 export default function LoanCardMaster(){
     const [loanID,setloanID] = React.useState('');
     const [loanType, setLoanType] = React.useState('');
-    const [state, setState] = React.useState(0);
+    const [state, setState] = React.useState(1);
 
     const handleSubmit = (event) =>{
         // event.preventDefault();
@@ -73,7 +73,7 @@ export default function LoanCardMaster(){
     };
 
     const handleDecrement = (event) => {
-        setState(state > 0 ? state - 1 : state);
+        setState(state > 1 ? state - 1 : state);
     };
         return(
         <ThemeProvider theme={defaultTheme}>

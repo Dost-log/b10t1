@@ -18,9 +18,9 @@ import { FormControl, InputLabel, MenuItem, Select } from '@mui/material';
 
 const defaultTheme = createTheme();
 
-const getUrl = "";
-const deleteUrl = "";
-const editUrl = "";
+const getUrl = "http://localhost:5174/api/ItemMasters/GetAllItemMasters";
+const deleteUrl = "http://localhost:5174/api/ItemMasters/DeleteItem";
+const editUrl = "http://localhost:5174/api/ItemMasters/EditItem";
 
 export default function ItemMaster() {
   
@@ -43,10 +43,10 @@ export default function ItemMaster() {
     getData()
   },[])
 
-  const handleDelete = (itemID) => {
+  const handleDelete = (itemId) => {
     var result = window.confirm("Are you sure you want to delete?");
     if(result) {
-      axios.delete(deleteUrl + "?id=" + itemID,{
+      axios.delete(deleteUrl + "?id=" + itemId,{
         headers : {
           'Access-Control-Allow-Origin':'*',
         }
@@ -66,21 +66,22 @@ export default function ItemMaster() {
 
   const handleEdit = (row) => {
     setText("Save");
-    setDescription(row.description);
-    setIssueStatus(row.issueStatus);
-    setItemValuation(row.itemValuation);
+    setCounter(row.itemId);
+    setDescription(row.descprition);
+    setIssueStatus(row.status);
+    setItemValuation(row.valuation);
   }
 
   const handleSave = (row) => {
     setText("Edit");
     setCounter(0);
     axios.post(editUrl, {
-        itemID : row.itemID,
-        description : description,
-        issueStatus : issueStatus,
-        itemMake : row.itemMake,
-        itemCategory : row.itemCategory,
-        itemValuation : row.itemValuation
+        itemId : row.itemId,
+        descprition : description,
+        status : issueStatus,
+        make : row.make,
+        category : row.category,
+        valuation : itemValuation
     }, {
       headers : {
         'Access-Control-Allow-Origin':'*',
@@ -145,27 +146,27 @@ export default function ItemMaster() {
               sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
             >
               <TableCell component="th" scope="row">
-                {row.itemID}
+                {row.itemId}
               </TableCell>
               <TableCell align="right">
-                {counter === row.itemID ?
+                {counter === row.itemId ?
                 (<TextField 
                   variant='standard' 
-                  defaultValue={row.description} 
+                  defaultValue={row.descprition} 
                   sx={{maxWidth : 100}}
                   value={description}
                   onChange={descriptionChange}/>):
-                  (row.description)}
+                  (row.descprition)}
               </TableCell>
               <TableCell align="right">
-                {counter === row.issueStatus ?
+                {counter === row.itemId ?
                 (<FormControl sx={{maxWidth : 100}}>
                   <InputLabel id="issueStatus-select-label"></InputLabel>
                     <Select
                       labelId='issueStatus-select-label'
                       id="issueStatus"
                       value={issueStatus}
-                      defaultValue={row.issueStatus}
+                      defaultValue={row.status}
                       
                       onChange={issueStatusChange}
                       >
@@ -173,34 +174,34 @@ export default function ItemMaster() {
                       <MenuItem value={"N"}>N</MenuItem>
                     </Select>
                   </FormControl>):
-                  (row.issueStatus)}
+                  (row.status)}
               </TableCell>
               
-              <TableCell component="th" scope="row">
-                {row.itemMake}
-              </TableCell>
-
-              <TableCell component="th" scope="row">
-                {row.itemCategory}
-              </TableCell>
-              
-              <TableCell align="right">
-                {counter === row.itemID ?
-                (<TextField 
-                  variant='standard' 
-                  defaultValue={row.itemValuation} 
-                  sx={{maxWidth : 100}}
-                  value={itemValuation}
-                  onChange={itemValuationChange}/>):
-                  (row.itemValuation)}
+              <TableCell align='right'>
+                {row.make}
               </TableCell>
 
               <TableCell align='right'>
-                <Button sx={{color : (counter === row.itemID ? "green" : "")}} onClick={counter === row.itemID ? () => handleSave(row) : () => handleEdit(row)}>
+                {row.category}
+              </TableCell>
+              
+              <TableCell align="right">
+                {counter === row.itemId ?
+                (<TextField 
+                  variant='standard' 
+                  defaultValue={row.valuation} 
+                  sx={{maxWidth : 100}}
+                  value={itemValuation}
+                  onChange={itemValuationChange}/>):
+                  (row.valuation)}
+              </TableCell>
+
+              <TableCell align='right'>
+                <Button sx={{color : (counter === row.itemId ? "green" : "")}} onClick={counter === row.itemId ? () => handleSave(row) : () => handleEdit(row)}>
                   {text}
                 </Button>
               </TableCell>
-              <TableCell align='right'><Button sx={{color : "red"}} onClick={() => handleDelete(row.itemID)}>Delete</Button></TableCell>
+              <TableCell align='right'><Button sx={{color : "red"}} onClick={() => handleDelete(row.itemId)}>Delete</Button></TableCell>
             </TableRow>
           ))}
         </TableBody>

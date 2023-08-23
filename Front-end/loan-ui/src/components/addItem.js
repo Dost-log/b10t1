@@ -181,13 +181,13 @@ export default function AddCustomerData() {
             >
               Add Data
             </Button>
-            {/* <Grid container>
+            <Grid container>
               <Grid item xs>
-                <Link to='/show-customers' variant="body2">
-                  View Existing Users
+                <Link to='/item-master' variant="body2">
+                  View Existing Items
                 </Link>
               </Grid>
-            </Grid> */}
+            </Grid>
           </Box>
         </Box>
       </Container>
