@@ -146,7 +146,13 @@ export default function LoanCardMaster(){
             >
               Add Data
             </Button>
-           
+            <Grid container>
+              <Grid item xs>
+                <Link to='/loan-data' variant="body2">
+                  View Existing Loan Cards
+                </Link>
+              </Grid>
+            </Grid>
           </Box>
         </Box>
       </Container>
