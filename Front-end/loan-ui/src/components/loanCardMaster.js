@@ -30,7 +30,7 @@ import { MenuItem } from '@mui/material';
 
 const defaultTheme = createTheme();
 
-const url = "";
+const url = "http://localhost:5174/api/LoanCardMasters/AddLoanCard";
 
 export default function LoanCardMaster(){
     const [loanID,setloanID] = React.useState('');
@@ -39,7 +39,21 @@ export default function LoanCardMaster(){
 
     const handleSubmit = (event) =>{
         // event.preventDefault();
-        console.log('Success LoanCardMaster!');
+        axios.post(url, {
+          loanId: loanID,
+          loan_type: loanType,
+          status: "Y",
+          duration: state
+        }, {
+          headers : {
+            'Access-Control-Allow-Origin':'*',
+          }
+        }).then((response) => {
+          console.log(response);
+          alert("Loan Card Added Successfully.")
+        }).catch((error) => {
+          alert("Error : This Loan ID already exists, please enter a new ID.");
+        });
     }
 
     const loanIDChange = (event) => {
@@ -111,7 +125,7 @@ export default function LoanCardMaster(){
                 </FormControl>
               </Grid>
               <Grid item xs={12} sm={6}>
-                <Typography variant="h5" align='right'>Duration</Typography>
+                <Typography variant="h5" align='right'>Duration (yrs)</Typography>
               </Grid>
               <Grid item xs={12} sm={6}>
                 <ButtonGroup size="small" aria-label="small outlined button group" label="Duration">

@@ -17,8 +17,8 @@ import axios from 'axios';
 
 
 const defaultTheme = createTheme();
-// const url = "http://localhost:5174/api/EmployeeMasters/AddEmployee";
-const url="";
+const url = "http://localhost:5174/api/ItemMasters/AddItem";
+
 
 export default function AddCustomerData() {
 
@@ -31,7 +31,23 @@ export default function AddCustomerData() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-   console.log('Success!');
+    axios.post(url, {
+      itemId : itemID,
+      descprition : itemDescription,
+      make : itemMake,
+      status : "Y",
+      category : itemCategory,
+      valuation : itemValue
+    }, {
+      headers : {
+        'Access-Control-Allow-Origin':'*',
+      }
+    }).then((response) => {
+      console.log(response);
+      alert("Item Added Successfully")
+    }).catch((error) => {
+      alert("Error Occured");
+    });
   };
 
   const itemIDChange = (event)=>{
@@ -70,7 +86,7 @@ export default function AddCustomerData() {
         >
           
           <Typography component="h1" variant="h5">
-            Item Master Data Details
+            Add Item Details
           </Typography>
           <Box noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
             <Grid container spacing={2}>
@@ -111,7 +127,6 @@ export default function AddCustomerData() {
                   onChange={itemDescriptionChange}
                 />
               </Grid>
-
               <Grid item xs={12} sm={6}>
                 <TextField
                   required

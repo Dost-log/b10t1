@@ -26,6 +26,13 @@ export default function AdminDashboard() {
     navigate('/add-customer-data');
   }
 
+  const LoanCardManagement = () => {
+    navigate('/loan-card-master');
+  }
+
+  const ItemsMasterData = () => {
+    navigate("/add-item")
+  }
 
   return (
     <ThemeProvider theme={defaultTheme}>
@@ -61,6 +68,7 @@ export default function AdminDashboard() {
           <Button 
             fullWidth
             sx={{mb : 4}}
+            onClick={LoanCardManagement}
             variant='outlined' 
             align='center'>
               Loan Card Management
@@ -69,6 +77,7 @@ export default function AdminDashboard() {
           <Button 
             fullWidth
             sx={{mb : 4}}
+            onClick={ItemsMasterData}
             variant='outlined' 
             align='center'>
               Items Master Data

@@ -8,10 +8,11 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import axios from 'axios';
 
 
 const defaultTheme = createTheme();
-const postUrl = "";
+const url = "http://localhost:5174/api/EmployeeMasters/ApplyLoan";
 
 export default function UserApplyForLoan(){
     const [employeeId, setEmployeeId] = React.useState('');
@@ -21,7 +22,21 @@ export default function UserApplyForLoan(){
     const [itemMake, setItemMake] = React.useState('');
 
     const handleSubmit = (event) => {
-        console.log("Handle submit apply for loan fired!");
+      axios.post(url, {
+        employeeId : employeeId,
+        category :itemCategory,
+        descprition : itemDescription,
+        valuation : itemValue,
+        make : itemMake
+      }, {
+        headers : {
+          'Access-Control-Allow-Origin':'*',
+        }
+      }).then((response) => {
+        alert(response.data);
+      }).catch((error) => {
+        alert("No item with such details exists");
+      });
     }
 
 
