@@ -24,13 +24,13 @@ import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 const defaultTheme = createTheme();
 const url = "http://localhost:5174/api/EmployeeMasters/LoanCardsAvailed";
 
-export default function ShowCustomers() {
+export default function LoanCardsAvailed() {
   const [rows, setRows] = React.useState([]);
   const user = JSON.parse(localStorage.getItem('user'));
 
   const getData = () => {
     axios
-      .get(url + "?=" + user.username, {
+      .post(url + "?id=" + user.username, {
         headers: {
           "Access-Control-Allow-Origin": "*",
         },
@@ -44,7 +44,7 @@ export default function ShowCustomers() {
   };
 
   React.useEffect(() => {
-    //getData();
+    getData();
   }, []);
 
   return (
