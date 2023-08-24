@@ -70,13 +70,11 @@ export default function LoanData() {
     }
   };
   const [counter, setCounter] = React.useState(0);
-  const [text, setText] = React.useState("Edit");
   const [loanType, setLoanType] = React.useState("");
   const [duration, setDuration] = React.useState("");
   const [status, setStatus] = React.useState("");
 
   const handleEdit = (row) => {
-    setText("Save");
     setCounter(row.loanId);
     setLoanType(row.loan_type);
     setDuration(row.duration);
@@ -84,7 +82,6 @@ export default function LoanData() {
   };
 
   const handleSave = (row) => {
-    setText("Edit");
     setCounter(0);
     axios
       .post(
@@ -218,7 +215,7 @@ export default function LoanData() {
                             : () => handleEdit(row)
                         }
                       >
-                        {text}
+                        {counter === row.loanId ? "Save" : "Edit"}
                       </Button>
                     </TableCell>
                     <TableCell align="right">

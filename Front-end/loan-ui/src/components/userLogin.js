@@ -13,6 +13,7 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { AppBar, Toolbar } from "@mui/material";
+// import { toast } from "react-toastify";
 
 const defaultTheme = createTheme();
 const url = "http://localhost:5174/api/EmployeeMasters/LoginEmployeeMasters";
@@ -50,6 +51,7 @@ export default function UserLogin() {
         };
         localStorage.clear();
         localStorage.setItem("user", JSON.stringify(user));
+        //toast("Login Successful");
       })
       .catch((error) => {
         alert("Wrong credentials");

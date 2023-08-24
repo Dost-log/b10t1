@@ -70,13 +70,11 @@ export default function ShowCustomers() {
     }
   };
   const [counter, setCounter] = React.useState(0);
-  const [text, setText] = React.useState("Edit");
   const [designation, setDesignation] = React.useState("");
   const [department, setDepartment] = React.useState("");
   const [name, setName] = React.useState("");
 
   const handleEdit = (row) => {
-    setText("Save");
     setCounter(row.employeeId);
     setDepartment(row.department);
     setDesignation(row.designation);
@@ -84,7 +82,6 @@ export default function ShowCustomers() {
   };
 
   const handleSave = (row) => {
-    setText("Edit");
     setCounter(0);
     axios
       .post(
@@ -239,7 +236,7 @@ export default function ShowCustomers() {
                             : () => handleEdit(row)
                         }
                       >
-                        {text}
+                        {counter === row.employeeId ? "Save" : "Edit"}
                       </Button>
                     </TableCell>
                     <TableCell align="right">

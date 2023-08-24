@@ -64,13 +64,11 @@ export default function ItemMaster() {
     }
   };
   const [counter, setCounter] = React.useState(0);
-  const [text, setText] = React.useState("Edit");
   const [description, setDescription] = React.useState("");
   const [issueStatus, setIssueStatus] = React.useState("");
   const [itemValuation, setItemValuation] = React.useState("");
 
   const handleEdit = (row) => {
-    setText("Save");
     setCounter(row.itemId);
     setDescription(row.descprition);
     setIssueStatus(row.status);
@@ -78,7 +76,6 @@ export default function ItemMaster() {
   };
 
   const handleSave = (row) => {
-    setText("Edit");
     setCounter(0);
     axios
       .post(
@@ -217,7 +214,7 @@ export default function ItemMaster() {
                             : () => handleEdit(row)
                         }
                       >
-                        {text}
+                        {counter === row.itemId ? "Save" : "Edit"}
                       </Button>
                     </TableCell>
                     <TableCell align="right">
