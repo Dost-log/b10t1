@@ -31,7 +31,25 @@ export default function UserLogin() {
     setPassword(event.target.value);
   };
 
+  const validated = () => {
+    let ok = true;
+    if(username === "") {
+      ok = false;
+      toast.error("Employee Id can't be empty!")
+    }
+    if(!(/^[0-9]+$/i.test(username)) && ok) {
+      ok = false;
+      toast.error("Employee Id should be a number!")
+    }
+    if(password === "") {
+      ok = false;
+      toast.error("Password can't be empty!")
+    }
+    return ok;
+  }
+
   const handleSubmit = (e) => {
+    if(!validated()) return;
     e.preventDefault();
     const newUrl = url + "?id=" + username + "&password=" + password;
     axios

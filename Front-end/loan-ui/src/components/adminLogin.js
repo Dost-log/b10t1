@@ -29,7 +29,25 @@ export default function AdminLogin() {
     setPassword(event.target.value);
   };
 
+  const validated = () => {
+    let ok = true;
+    if(username === "") {
+      ok = false;
+      toast.error("Admin Id can't be empty!")
+    }
+    if(!(/^[0-9]+$/i.test(username)) && ok) {
+      ok = false;
+      toast.error("Admin Id should be a number!")
+    }
+    if(password === "") {
+      ok = false;
+      toast.error("Password can't be empty!")
+    }
+    return ok;
+  }
+
   const handleSubmit = (e) => {
+    if(!validated()) return;
     e.preventDefault();
     const newUrl = url + "?id=" + username + "&password=" + password;
     axios
@@ -95,7 +113,7 @@ export default function AdminLogin() {
               required
               fullWidth
               id="email"
-              label="Employee Id"
+              label="Admin Id"
               name="email"
               value={username}
               onChange={usernameChange}
