@@ -129,7 +129,7 @@ export default function ItemMaster() {
           }}
         >
           <Typography component="h1" variant="h5" marginBottom={10}>
-            Customer Master Data Details
+            Items Master Data
           </Typography>
           <TableContainer component={Paper}>
             <Table sx={{ minWidth: 650 }} aria-label="simple table">

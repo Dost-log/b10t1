@@ -13,6 +13,8 @@ import LoanCardsAvailed from './components/loanCardsAvailed';
 import ItemsPurchased from './components/itemsPurchased';
 import ItemMaster from './components/itemMaster';
 import LoanData from './components/loanData';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css'
 import './App.css';
 
 function App() {
@@ -33,6 +35,7 @@ function App() {
         <Route path='/item-master' element={<ItemMaster/>}/>
         <Route path='/loan-data' element={<LoanData/>}/>
       </Routes>
+      <ToastContainer/>
     </BrowserRouter>
   );
 }

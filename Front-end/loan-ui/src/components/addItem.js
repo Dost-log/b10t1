@@ -88,7 +88,7 @@ export default function AddCustomerData() {
           }}
         >
           <Typography component="h1" variant="h5">
-            Add Item Details
+            Add a New Item
           </Typography>
           <Box noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
             <Grid container spacing={2}>

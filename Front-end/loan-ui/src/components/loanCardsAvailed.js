@@ -62,7 +62,7 @@ export default function LoanCardsAvailed() {
           }}
         >
           <Typography component="h1" variant="h5" marginBottom={10}>
-            Loan Cards Availed
+            Loans Availed
           </Typography>
 
           <Grid container spacing={2} sx={{ marginBottom: 10 }}>

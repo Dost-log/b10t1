@@ -63,7 +63,7 @@ export default function ItemsPurchased() {
           }}
         >
           <Typography component="h1" variant="h5" marginBottom={10}>
-            Loan Cards Availed
+            Items Purchased
           </Typography>
 
           <Grid container spacing={2} sx={{ marginBottom: 10 }}>

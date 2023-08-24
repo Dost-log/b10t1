@@ -92,7 +92,7 @@ export default function LoanCardMaster() {
           }}
         >
           <Typography component="h1" variant="h5">
-            Loan Card Master Data Details
+            Add Loan Card
           </Typography>
           <Box noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
             <Grid container spacing={2}>

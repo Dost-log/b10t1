@@ -11,6 +11,7 @@ import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import axios from "axios";
 import { AppBar, Toolbar } from "@mui/material";
+import { toast } from "react-toastify";
 
 const defaultTheme = createTheme();
 const url = "http://localhost:5174/api/AdminMasters/LoginAdminMasters";
@@ -44,9 +45,10 @@ export default function AdminLogin() {
         };
         localStorage.clear();
         localStorage.setItem("admin", JSON.stringify(admin));
+        toast.success("Login Successful!");
       })
       .catch((error) => {
-        alert("Wrong credentials");
+        toast.error("Wrong Credentials!");
       });
   };
 
