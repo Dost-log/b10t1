@@ -101,10 +101,10 @@ export default function LoanCardsAvailed() {
                     key={row.employeeId}
                     sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                   >
-                    <TableCell align="right">{row.loanId}</TableCell>
-                    <TableCell align="right">{row.loanType}</TableCell>
+                    <TableCell align="left">{row.loan_id}</TableCell>
+                    <TableCell align="right">{row.loan_type}</TableCell>
                     <TableCell align="right">{row.duration}</TableCell>
-                    <TableCell align="right">{row.cardIssueDate}</TableCell>
+                    <TableCell align="right">{row.issue_date.substring(0,10)}</TableCell>
                   </TableRow>
                 ))}
               </TableBody>

@@ -103,7 +103,7 @@ export default function ItemsPurchased() {
                     key={row.employeeId}
                     sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                   >
-                    <TableCell align="right">{row.issue_id}</TableCell>
+                    <TableCell align="left">{row.issue_id}</TableCell>
                     <TableCell align="right">{row.description}</TableCell>
                     <TableCell align="right">{row.make}</TableCell>
                     <TableCell align="right">{row.category}</TableCell>

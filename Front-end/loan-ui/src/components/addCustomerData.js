@@ -15,6 +15,7 @@ import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import dayjs from "dayjs";
 import axios from "axios";
 import Navbar from "./navbar";
+import { toast } from "react-toastify";
 
 const defaultTheme = createTheme();
 const url = "http://localhost:5174/api/EmployeeMasters/AddEmployee";
@@ -51,10 +52,10 @@ export default function AddCustomerData() {
       )
       .then((response) => {
         console.log(response);
-        alert("User Added");
+        toast.success("User Added Successfully!");
       })
       .catch((error) => {
-        alert("User Already Exists");
+        toast.error("User Already Exists");
       });
   };
 

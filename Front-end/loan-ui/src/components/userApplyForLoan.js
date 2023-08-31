@@ -10,6 +10,7 @@ import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import axios from "axios";
 import Navbar from "./navbar";
+import { toast } from "react-toastify";
 
 const defaultTheme = createTheme();
 const url = "http://localhost:5174/api/EmployeeMasters/ApplyLoan";
@@ -39,7 +40,11 @@ export default function UserApplyForLoan() {
         }
       )
       .then((response) => {
-        alert(response.data);
+        const str = response.data;
+        if(str === "Loan approved") {
+          toast.success(str);
+        }
+        else toast.error(str);
       })
       .catch((error) => {
         alert("No item with such details exists");

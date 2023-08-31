@@ -15,6 +15,7 @@ import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import dayjs from "dayjs";
 import axios from "axios";
 import Navbar from "./navbar";
+import { toast } from "react-toastify";
 
 const defaultTheme = createTheme();
 const url = "http://localhost:5174/api/ItemMasters/AddItem";
@@ -48,10 +49,10 @@ export default function AddCustomerData() {
       )
       .then((response) => {
         console.log(response);
-        alert("Item Added Successfully");
+        toast.success("Item Added Successfully");
       })
       .catch((error) => {
-        alert("Error Occured");
+        toast.error("Error Occured");
       });
   };
 
